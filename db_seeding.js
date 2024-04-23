@@ -50,7 +50,7 @@ db.Restaurants.insertMany([{
     ]
   }]);
 
-  db.Menus.insertOne({
+db.Menus.insertOne({
     "restaurant": "Restaurant 1",
     "dishes": [
         {
@@ -59,7 +59,8 @@ db.Restaurants.insertMany([{
             "description": "totopos de maiz con salsa y queso",
             "price": 120,
             "picture": "https://patijinich.com/es/wp-content/uploads/sites/3/2017/07/207-chilaquiles-verdes.jpg",
-            "isAvailable": true
+            "isAvailable": true,
+            "tag": 'enchiloso'
         },
         {
             "category": "postre",
@@ -67,7 +68,8 @@ db.Restaurants.insertMany([{
             "description": "galletas maria con yogur griego y limon",
             "price": 80,
             "picture": "https://www.gastrolabweb.com/postres/2023/2/14/carlota-de-limon-un-bocado-de-alegria-al-corazon-que-preparas-con-esta-receta-33298.html#&gid=1&pid=1",
-            "isAvailable": true
+            "isAvailable": true,
+            "tag": ''
         }
     ]
 });
