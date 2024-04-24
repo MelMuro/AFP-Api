@@ -8,5 +8,4 @@ restaurantsRouter.get('/', async (req: Request, res: Response) => {
     const restaurants = await dbCollections.Restaurants?.find<Restaurant>({}).toArray();
     
     res.status(200).send(restaurants);
-    // res.status(200).json(restaurants);
 });
