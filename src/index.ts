@@ -11,6 +11,7 @@ const app: Application = express();
 const port = process.env.PORT || 8000;
 
 connectToDb().then(() => {
+  app.use(express.json());
   app.get('/', (req: Request, res: Response) => {
     res.send('Welcome to Express & TypeScript Server');
   });
