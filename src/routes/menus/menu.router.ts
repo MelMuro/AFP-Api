@@ -110,7 +110,6 @@ menusRouter.post('/', async (req: Request, res: Response) => {
 
 
 //PUT Actualiar menu
-
 menusRouter.put('/:id', async (req: Request, res: Response) => {
     const id = req?.params?.id;
     try {
@@ -129,13 +128,14 @@ menusRouter.put('/:id', async (req: Request, res: Response) => {
 
 //DELETE Borrar el menu
 
-menusRouter.delete('/id', async (req: Request, res: Response) => {
+menusRouter.delete('/:id', async (req: Request, res: Response) => {
     const id = req?.params?.id;
     try {
 
         const query = { _id: new ObjectId(id) };
         const result = await dbCollections.Menus?.deleteOne(query);
-
+        
+        res.status(200).send(result);
     } catch (error) {
         console.error(error);
         res.status(500).send(error);
