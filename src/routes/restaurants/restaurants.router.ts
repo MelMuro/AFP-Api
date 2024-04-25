@@ -15,7 +15,7 @@ restaurantsRouter.get('/', async (req: Request, res: Response) => {
 }
 });
 
-//by name
+//GET by name
 restaurantsRouter.get('/:name', async (req: Request, res: Response) => {
     const name = req?.params?.name;
     
@@ -37,4 +37,20 @@ restaurantsRouter.get('/:name', async (req: Request, res: Response) => {
         res.status(500).send("Internal Server Error");
     }
 });
+
+//POST
+restaurantsRouter.post("/newRestaurant", async (req: Request, res: Response) => {
+    try {
+        console.log("request ", req.body);
+            const newRestaurant = req.body as Restaurant;
+            console.log("new ", newRestaurant);
+            const result = await dbCollections.Restaurants?.insertOne(newRestaurant);
+    result
+                ? res.status(201).send(`Successfully created a new restaurant`)
+                : res.status(500).send("Failed to create a new restaurant.");
+        } catch (error: any) {
+            console.error(error);
+            res.status(400).send(error.message);
+    }
+    });
 
