@@ -4,10 +4,10 @@
   "description": "AFP API sample",
   "main": "index.ts",
   "scripts": {
-    "test": "jest",
+    "test": "set NODE_ENV=test& jest  --detectOpenHandles --no-cache",
     "build": "npx tsc",
     "start": "node dist/indexjs",
-    "dev": "ts-node-dev src/index.ts"
+    "dev": "set NODE_ENV=development& ts-node-dev src/index.ts"
   },
   "jest": {
     "testEnvironment": "node",
@@ -15,14 +15,20 @@
       "/node_modules/"
     ],
     "preset": "ts-jest",
-    "setupFiles": ["dotenv/config"],
+    "setupFiles": [
+      "dotenv/config"
+    ],
     "collectCoverage": true,
-    "coverageReporters": ["text", "html"],
+    "coverageReporters": [
+      "text",
+      "html"
+    ],
     "coverageDirectory": "<rootDir>/coverage/"
   },
   "author": "Mel Muro",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.2",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mongodb": "^6.5.0"

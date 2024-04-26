@@ -4,11 +4,13 @@ import Collections from "./CollectionsInterface";
 
 dotenv.config();
 
+let mongoClient: MongoClient;
+
 export const dbCollections: Collections = {};
 
 export const connectToDb = async () => {
     try {
-        const mongoClient = new MongoClient(process.env.DB_CONN_STRING || "");
+        mongoClient = new MongoClient(process.env.DB_CONN_STRING || "");
         await mongoClient.connect();
 
         const db = mongoClient.db(process.env.DB_NAME);
