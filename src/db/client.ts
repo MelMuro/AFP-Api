@@ -12,7 +12,6 @@ export const connectToDb = async () => {
         await mongoClient.connect();
         console.log('Conexión exitosa a la base de datos');
 
-
         const db = mongoClient.db(process.env.DB_NAME);
         dbCollections.Menus = db.collection(process.env.DB_MENUS_COLLECTION || "");
         dbCollections.Restaurants = db.collection(process.env.DB_RESTAURANTS_COLLECTION || "")
