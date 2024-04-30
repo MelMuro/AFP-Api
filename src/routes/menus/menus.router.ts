@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
 import { dbCollections } from '../../db/client'
-import Menu from './menu.model';
+import Menus from './menus.model';
 import { ObjectId } from 'mongodb';
 
 export const menusRouter = Router();
@@ -8,7 +8,7 @@ export const menusRouter = Router();
 //GetAll
 menusRouter.get('/', async (req: Request, res: Response) => {
     try {
-        const menus = await dbCollections.Menus?.find<Menu>({}).toArray();
+        const menus = await dbCollections.Menus?.find<Menus>({}).toArray();
         if (!menus) {
             res.status(404).send('Dish not found');
         }
@@ -23,13 +23,13 @@ menusRouter.get('/', async (req: Request, res: Response) => {
 menusRouter.get('/:dish', async (req: Request, res: Response) => {
     try {
         const name = req.params.dish.toLowerCase();
-        const menu = await dbCollections.Menus?.findOne<Menu>({
+        const menu = await dbCollections.Menus?.findOne<Menus>({
             'dishes.name': { $regex: new RegExp(`${name}`, 'i') }
         });
         if (!menu) {
             return res.status(404).send('Dish not found');
         }
-        const dishes = menu.dishes.filter((dish: any) => dish.name.toLowerCase().includes(name));
+        const dishes = menu.dishes.filter(dish => dish.name.toLowerCase().includes(name));
         if (dishes.length === 0) {
             return res.status(404).send('Dish not found');
         }
@@ -50,14 +50,14 @@ menusRouter.get('/:restaurant/:dish', async (req: Request, res: Response) => {
     try {
         const restaurant = req.params.restaurant;
         const dishName = req.params.dish.toLowerCase();
-        const menu = await dbCollections.Menus?.findOne<Menu>({
+        const menu = await dbCollections.Menus?.findOne<Menus>({
             'restaurant': restaurant,
             'dishes.name': { $regex: new RegExp(`${dishName}`, 'i') }
         });
         if (!menu) {
             return res.status(404).send('Restaurant not found');
         }
-        const dishes = menu.dishes.filter((dish: any) => dish.name.toLowerCase().includes(dishName));
+        const dishes = menu.dishes.filter(dish => dish.name.toLowerCase().includes(dishName));
         if (!dishes) {
             return res.status(404).send('dishes not found');
         }

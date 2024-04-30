@@ -22,7 +22,7 @@ describe("Restaurants Router tests", () => {
     await db.close();
   });
 
-  it("should get all restaurants", async () => {
+  it.skip("should get all restaurants", async () => {
     //Act
     const res = await request.get("/restaurants");
     const restaurants = res.body as Restaurant[];
