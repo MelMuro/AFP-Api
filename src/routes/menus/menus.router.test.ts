@@ -32,13 +32,14 @@ describe('Menus Router tests', () => {
         expect(menus[0].restaurant).toBe("Test Restaurant 1");
     });
 
-    it('should get a dish form any restaurant', async () => {
+    it('should get a dish from any restaurant', async () => {
         //Act
-        const res = await request.get('/menus?chilaquiles');
-        const menus = res.body as Menus[];
+        const res = await request.get('/menus/chilaquiles');
+        const menu = res.body as Menus;
 
         //Assert
         expect(res.statusCode).toBe(200);
-        expect(menus[0].dishes[0].name).toBe("chilaquiles");
+        expect(menu.dishes[0].name).toBe("chilaquiles");
     });
+
 });

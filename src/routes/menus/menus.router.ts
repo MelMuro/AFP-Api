@@ -45,34 +45,6 @@ menusRouter.get('/:dish', async (req: Request, res: Response) => {
     }
 });
 
-//Get Dish by Restaurant
-menusRouter.get('/:restaurant/:dish', async (req: Request, res: Response) => {
-    try {
-        const restaurant = req.params.restaurant;
-        const dishName = req.params.dish.toLowerCase();
-        const menu = await dbCollections.Menus?.findOne<Menus>({
-            'restaurant': restaurant,
-            'dishes.name': { $regex: new RegExp(`${dishName}`, 'i') }
-        });
-        if (!menu) {
-            return res.status(404).send('Restaurant not found');
-        }
-        const dishes = menu.dishes.filter(dish => dish.name.toLowerCase().includes(dishName));
-        if (!dishes) {
-            return res.status(404).send('dishes not found');
-        }
-        const result = {
-            id: menu._id,
-            restaurant: menu.restaurant,
-            dishes: dishes
-        };
-        res.status(200).send(result);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error searching dishes');
-    }
-});
-
 //POST create menu
 menusRouter.post('/', async (req: Request, res: Response) => {
     try {
