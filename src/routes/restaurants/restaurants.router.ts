@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { dbCollections } from '../../db/client'
+import { dbCollections } from '../../db/client';
 import Restaurant from './restaurant.model';
 
 export const restaurantsRouter = Router();
