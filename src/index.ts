@@ -1,6 +1,6 @@
 import { menusRouter } from './routes/menus/menu.router';
-import express, { Request, Response , Application } from 'express';
-import { restaurantsRouter }  from './routes/restaurants/restaurants.router'
+import express, { Request, Response, Application } from 'express';
+import { restaurantsRouter } from './routes/restaurants/restaurants.router'
 import { connectToDb } from './db/client'
 import dotenv from 'dotenv';
 
@@ -18,12 +18,12 @@ connectToDb().then(() => {
 
   app.use("/restaurants", restaurantsRouter);
   app.use("/menus", menusRouter);
-  
+
   app.listen(port, () => {
     console.log(`Server is Fire at http://localhost:${port}`);
   });
 })
-.catch((error: Error) => {
-  console.error("Database connection failed", error);
-  process.exit();
-});
+  .catch((error: Error) => {
+    console.error("Database connection failed", error);
+    process.exit();
+  });
