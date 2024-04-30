@@ -4,14 +4,31 @@
   "description": "AFP API sample",
   "main": "index.ts",
   "scripts": {
-    "test": "test",
+    "test": "set NODE_ENV=test& jest  --detectOpenHandles --no-cache",
     "build": "npx tsc",
     "start": "node dist/indexjs",
-    "dev": "ts-node-dev src/index.ts"
+    "dev": "set NODE_ENV=development& ts-node-dev src/index.ts"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "preset": "ts-jest",
+    "setupFiles": [
+      "dotenv/config"
+    ],
+    "collectCoverage": true,
+    "coverageReporters": [
+      "text",
+      "html"
+    ],
+    "coverageDirectory": "<rootDir>/coverage/"
   },
   "author": "Mel Muro",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.2",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mongodb": "^6.5.0"
@@ -19,7 +36,13 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.12.7",
+    "@types/supertest": "^6.0.2",
+    "jest": "^29.7.0",
+    "mongodb-memory-server": "^9.2.0",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.1.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.5"
   }
