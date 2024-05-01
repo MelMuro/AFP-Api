@@ -16,6 +16,6 @@ export const connectToDb = async () => {
         dbCollections.Menus = db.collection(process.env.DB_MENUS_COLLECTION || "");
         dbCollections.Restaurants = db.collection(process.env.DB_RESTAURANTS_COLLECTION || "")
     } catch (error) {
-        console.log(error);
+        console.log('Error');
     }
 };
