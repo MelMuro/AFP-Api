@@ -29,7 +29,7 @@ restaurantsRouter.get(
 
     try {
       const restaurant = await dbCollections.Restaurants?.findOne({
-        Restaurant: name,
+        name: name,
       });
 
       if (!restaurant) {
