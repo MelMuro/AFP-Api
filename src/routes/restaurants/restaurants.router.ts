@@ -23,7 +23,7 @@ restaurantsRouter.get("/", async (req: Request, res: Response) => {
 
 //GET by name
 restaurantsRouter.get(
-  "/getRestaurant/:name",
+  "/:name",
   async (req: Request, res: Response) => {
     const name = req?.params?.name;
 
@@ -33,11 +33,11 @@ restaurantsRouter.get(
       });
 
       if (!restaurant) {
-        console.log(res.status);
+      
         res.status(404).send("404 Restaurant not found");
         return;
       } else {
-        console.log("estatus ", res.status);
+        
         res.status(200).send(restaurant);
       }
     } catch (error) {
@@ -49,26 +49,26 @@ restaurantsRouter.get(
 
 //POST
 restaurantsRouter.post(
-  "/newRestaurant",
+  "/",
   async (req: Request, res: Response) => {
     try {
-      console.log("request ", req.body);
+     
       const newRestaurant = req.body as Restaurant;
-      console.log("new ", newRestaurant);
+     
       const result = await dbCollections.Restaurants?.insertOne(newRestaurant);
       result
         ? res.status(201).send(`Successfully created a new restaurant`)
         : res.status(500).send("Failed to create a new restaurant.");
     } catch (error: any) {
       console.error(error);
-      res.status(400).send(error.message);
+      res.status(500).send(error.message);
     }
   }
 );
 
 //PUT
 restaurantsRouter.put(
-  "/updateRestaurant/:id",
+  "/:id",
   async (req: Request, res: Response) => {
     const id = req?.params?.id;
     try {
@@ -84,14 +84,14 @@ restaurantsRouter.put(
         : res.status(304).send(`Restaurant with id: ${id} not updated`);
     } catch (error: any) {
       console.error(error.message);
-      res.status(400).send(error.message);
+      res.status(500).send(error.message);
     }
   }
 );
 
 //DELETE
 restaurantsRouter.delete(
-  "/deleteRestaurant/:id",
+  "/:id",
   async (req: Request, res: Response) => {
     const id = req?.params?.id;
     try {
@@ -102,11 +102,11 @@ restaurantsRouter.delete(
       } else if (!result) {
         res.status(400).send(`Failed to remove restaurant with id ${id}`);
       } else if (!result.deletedCount) {
-        res.status(404).send(`Game with id ${id} does not exist`);
+        res.status(404).send(`Restaurant with id ${id} does not exist`);
       }
     } catch (error: any) {
       console.error(error.message);
-      res.status(400).send(error.message);
+      res.status(500).send(error.message);
     }
   }
 );
