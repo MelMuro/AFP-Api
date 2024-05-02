@@ -14,15 +14,15 @@ describe('Menus Router tests', () => {
         await db.seedDatabase();
     });
 
-    afterEach(async () => {
-        await db.clearDatabase();
-    })
+    // afterEach(async () => {
+    //     await db.clearDatabase();
+    // })
 
     afterAll(async () => {
         await db.close();
     });
 
-    it('should get all menus', async () => {
+    it('should GET all menus', async () => {
         //Act
         const res = await request.get('/menus');
         const menus = res.body as Menus[];
@@ -30,8 +30,10 @@ describe('Menus Router tests', () => {
         //Assert
         expect(res.statusCode).toBe(200);
         expect(menus[0].restaurant).toBe("Test Restaurant 1");
+        console.log(menus)
     });
-    it('should get a dish from any restaurant', async () => {
+
+    it('should GET a dish from any restaurant', async () => {
         //Act
         const res = await request.get('/menus/chilaquiles');
         const menus = res.body as Menus[];
@@ -41,7 +43,7 @@ describe('Menus Router tests', () => {
         expect(menus[0].dishes[0].name).toBe("chilaquiles");
     });
 
-    it('should get a dish from by restaurant', async () => {
+    it('should GET a dish from by restaurant', async () => {
         //Act
         const res = await request.get('/menus/Test Restaurant 1/chilaquiles');
         const menus = res.body as Menus;
@@ -52,7 +54,7 @@ describe('Menus Router tests', () => {
         expect(menus.dishes[0].name).toBe("chilaquiles");
     });
 
-    it('should post a menu', async () => {
+    it('should POST a menu', async () => {
         //Act
         const mockMenu = {
             restaurant: 'Sushito',
@@ -78,6 +80,28 @@ describe('Menus Router tests', () => {
         expect(res.statusCode).toBe(200);
         expect(menus.restaurant).toBe(mockMenu.restaurant);
         expect(menus.dishes[0].name).toBe(mockMenu.dishes[0].name);
+    });
+
+    it('should UPDATE a menu', async () => {
+        const updatedMenu = {
+            restaurant: 'Sushito Edit',
+            dishes: [
+                {
+                    name: 'Taco yaqui edit',
+                }
+            ]
+        };
+
+        const res = await request
+            .put('/menus/6633f4fd0739c16817ff9b60')
+            .send(updatedMenu);
+        expect(res.status).toBe(200);
+    });
+
+    it('should DELETE a menu', async () => {
+        const res = await request.delete('/menus/6633f4fd0739c16817ff9b60')
+
+        expect(res.status).toBe(200);
     });
 
 });
