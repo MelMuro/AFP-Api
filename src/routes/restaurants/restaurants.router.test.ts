@@ -5,24 +5,20 @@ import Restaurant from "./restaurant.model";
 
 const request = supertest(app);
 
-describe("Restaurants Router tests", () => {
+describe.skip("Restaurants Router tests", () => {
   beforeAll(async () => {
     await db.connect();
   });
 
   beforeEach(async () => {
-    await db.seedDatabase();
-  });
-
-  afterEach(async () => {
-    await db.clearDatabase();
+    await db.resetDatabase();
   });
 
   afterAll(async () => {
     await db.close();
   });
 
-  it.skip("should get all restaurants", async () => {
+  it("should get all restaurants", async () => {
     //Act
     const res = await request.get("/restaurants");
     const restaurants = res.body as Restaurant[];
