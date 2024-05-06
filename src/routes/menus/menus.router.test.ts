@@ -77,31 +77,55 @@ describe('Menus Router tests', () => {
         const menus = getNewRestaurant.body as Menus;
 
         //Assert
-        expect(res.statusCode).toBe(200);
+        expect(res.statusCode).toBe(201);
         expect(menus.restaurant).toBe(mockMenu.restaurant);
         expect(menus.dishes[0].name).toBe(mockMenu.dishes[0].name);
     });
 
     it('should UPDATE a menu', async () => {
+
+        const resAfter = await request.get('/menus');
+        const menusAfter = resAfter.body as Menus[];
+
         const updatedMenu = {
             restaurant: 'Sushito Edit',
             dishes: [
                 {
-                    name: 'Taco yaqui edit',
+                    category: 'Plato fuerte,',
+                    name: 'Sushitito',
+                    description: 'Un sushi',
+                    price: 222,
+                    picture: 'test_picture50',
+                    isAvailable: true,
+                    tag: 'empanizado'
                 }
             ]
         };
 
         const res = await request
-            .put('/menus/6633f4fd0739c16817ff9b60')
+            .put(`/menus/${menusAfter[0]._id}`)
             .send(updatedMenu);
+
+        const resBefore = await request.get('/menus');
+        const menuBefore = resBefore.body as Menus[];
+
         expect(res.status).toBe(200);
+        expect(menuBefore[0].restaurant).toBe('Sushito Edit')
     });
 
     it('should DELETE a menu', async () => {
-        const res = await request.delete('/menus/6633f4fd0739c16817ff9b60')
+        const resAfter = await request.get('/menus');
+        const deleteAfter = resAfter.body as Menus[];
+
+        const res = await request.delete(`/menus/${deleteAfter[0]._id}`)
+
+        const resBefore = await request.get('/menus');
+        const deleteBefore = resBefore.body as Menus[];
+
+        console.log('deleteBefore ', deleteBefore);
 
         expect(res.status).toBe(200);
+        expect(deleteBefore).toHaveLength(0);
     });
 
 });

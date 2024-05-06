@@ -85,14 +85,12 @@ menusRouter.post('/', async (req: Request, res: Response) => {
         if (!result) {
             res.status(500).send(result)
         }
-        const insertedMenu = result?.insertedId;
-        res.status(200).send(insertedMenu);
+        res.status(201).send(newMenu);
     } catch (error) {
         console.error(error);
         res.status(500).send('Error insert menu');
     }
 });
-
 
 //PUT Actualiar menu
 menusRouter.put('/:id', async (req: Request, res: Response) => {
@@ -104,7 +102,11 @@ menusRouter.put('/:id', async (req: Request, res: Response) => {
         if (!result) {
             res.status(500).send(result)
         }
-        res.status(200).send(result);
+        const updateData = await dbCollections.Menus?.findOne(query);
+        if (!updateData) {
+            res.status(404).send(result)
+        }
+        res.status(200).send(updateData);
     } catch (error) {
         console.error(error);
         res.status(500).send(error);
