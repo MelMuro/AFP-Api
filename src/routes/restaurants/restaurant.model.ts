@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 
-export default interface Restaurant {
+type Restaurant = {
 	name: string;
 	description: string;
 	category: string;
@@ -20,3 +20,4 @@ export default interface Restaurant {
 	pictures: string[];
 	id: ObjectId;
 }
+export default Restaurant

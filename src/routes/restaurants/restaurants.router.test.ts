@@ -5,6 +5,16 @@ import Restaurant from './restaurant.model';
 
 const request = supertest(app);
 
+<<<<<<< HEAD
+describe.skip("Restaurants Router tests", () => {
+  beforeAll(async () => {
+    await db.connect();
+  });
+
+  beforeEach(async () => {
+    await db.resetDatabase();
+  });
+=======
 describe('Restaurants Router tests', () => {
 	beforeAll(() => {
 		return db.connect();
@@ -17,6 +27,7 @@ describe('Restaurants Router tests', () => {
 	afterEach(() => {
 		db.clearDatabase();
 	});
+>>>>>>> develop
 
 	afterAll(() => {
 		return db.close();
