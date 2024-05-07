@@ -5,7 +5,6 @@ import { ObjectId } from 'mongodb';
 
 export const menusRouter = Router();
 
-//GetAll
 menusRouter.get('/', async (req: Request, res: Response) => {
     try {
         const menus = await dbCollections.Menus?.find<Menu>({}).toArray();
@@ -15,11 +14,10 @@ menusRouter.get('/', async (req: Request, res: Response) => {
         res.status(200).send(menus);
     } catch (error) {
         console.error(error);
-        res.status(500).send('Error Dishes')
+        res.status(500).send('Error Dishes');
     }
 });
 
-//Get Dishes for Anywhere
 menusRouter.get('/:dish', async (req: Request, res: Response) => {
     try {
         const name = req.params.dish.toLowerCase();
@@ -46,7 +44,6 @@ menusRouter.get('/:dish', async (req: Request, res: Response) => {
     }
 });
 
-//Get Dish by Restaurant
 menusRouter.get('/:restaurant/:dish', async (req: Request, res: Response) => {
     try {
         const restaurant = req.params.restaurant;
@@ -76,7 +73,6 @@ menusRouter.get('/:restaurant/:dish', async (req: Request, res: Response) => {
     }
 });
 
-//POST create menu
 menusRouter.post('/', async (req: Request, res: Response) => {
     try {
 
@@ -113,15 +109,13 @@ menusRouter.put('/:id', async (req: Request, res: Response) => {
     }
 });
 
-//DELETE Borrar el menu
-
 menusRouter.delete('/:id', async (req: Request, res: Response) => {
     const id = req?.params?.id;
     try {
         const query = { _id: new ObjectId(id) };
         const result = await dbCollections.Menus?.deleteOne(query);
         if (!result) {
-            res.status(500).send(result)
+            res.status(500).send(result);
         }
         res.status(200).send(result);
     } catch (error) {

@@ -64,7 +64,7 @@ db.Menus.insertOne({
         },
         {
             "category": "postre",
-            "name": "carlota",
+            "name": "carlota", 
             "description": "galletas maria con yogur griego y limon",
             "price": 80,
             "picture": "https://www.gastrolabweb.com/postres/2023/2/14/carlota-de-limon-un-bocado-de-alegria-al-corazon-que-preparas-con-esta-receta-33298.html#&gid=1&pid=1",
