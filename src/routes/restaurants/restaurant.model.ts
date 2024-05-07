@@ -18,5 +18,5 @@ export default interface Restaurant {
 	email: string;
 	media: string[];
 	pictures: string[];
-	id: ObjectId;
+	_id: ObjectId;
 }
