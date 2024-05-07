@@ -1,7 +1,7 @@
 import supertest from "supertest";
 import app from "../../app";
 import * as db from "../../db/client.mock";
-import Menus from "./menus.model";
+import Menu from "./menu.model";
 
 const request = supertest(app);
 
@@ -14,10 +14,6 @@ describe('Menus Router tests', () => {
         await db.seedDatabase();
     });
 
-    // afterEach(async () => {
-    //     await db.clearDatabase();
-    // })
-
     afterAll(async () => {
         await db.close();
     });
@@ -25,7 +21,7 @@ describe('Menus Router tests', () => {
     it('should GET all menus', async () => {
         //Act
         const res = await request.get('/menus');
-        const menus = res.body as Menus[];
+        const menus = res.body as Menu[];
 
         //Assert
         expect(res.statusCode).toBe(200);
@@ -36,7 +32,7 @@ describe('Menus Router tests', () => {
     it('should GET a dish from any restaurant', async () => {
         //Act
         const res = await request.get('/menus/chilaquiles');
-        const menus = res.body as Menus[];
+        const menus = res.body as Menu[];
 
         //Assert
         expect(res.statusCode).toBe(200);
@@ -46,7 +42,7 @@ describe('Menus Router tests', () => {
     it('should GET a dish from by restaurant', async () => {
         //Act
         const res = await request.get('/menus/Test Restaurant 1/chilaquiles');
-        const menus = res.body as Menus;
+        const menus = res.body as Menu;
 
         //Assert
         expect(res.statusCode).toBe(200);
@@ -74,7 +70,7 @@ describe('Menus Router tests', () => {
             .send(mockMenu)
 
         const getNewRestaurant = await request.get(`/menus/${mockMenu.restaurant}/${mockMenu.dishes[0].name}`);
-        const menus = getNewRestaurant.body as Menus;
+        const menus = getNewRestaurant.body as Menu;
 
         //Assert
         expect(res.statusCode).toBe(201);
@@ -84,11 +80,11 @@ describe('Menus Router tests', () => {
 
     it('should UPDATE a menu', async () => {
 
-        const resAfter = await request.get('/menus');
-        const menusAfter = resAfter.body as Menus[];
-
+        const resBefore = await request.get('/menus');
+        const menusBefore = resBefore.body as Menu[];
+        expect(menusBefore[0].restaurant).toBe('Test Restaurant 1')
         const updatedMenu = {
-            restaurant: 'Sushito Edit',
+            restaurant: 'Test Restaurant 1 Edit',
             dishes: [
                 {
                     category: 'Plato fuerte,',
@@ -103,26 +99,26 @@ describe('Menus Router tests', () => {
         };
 
         const res = await request
-            .put(`/menus/${menusAfter[0]._id}`)
+            .put(`/menus/${menusBefore[0]._id}`)
             .send(updatedMenu);
 
-        const resBefore = await request.get('/menus');
-        const menuBefore = resBefore.body as Menus[];
+        const resAfter = await request.get('/menus');
+        const menuAfter = resAfter.body as Menu[];
 
         expect(res.status).toBe(200);
-        expect(menuBefore[0].restaurant).toBe('Sushito Edit')
+        expect(menuAfter[0].restaurant).toBe('Test Restaurant 1 Edit')
     });
 
     it('should DELETE a menu', async () => {
-        const resAfter = await request.get('/menus');
-        const deleteAfter = resAfter.body as Menus[];
-
-        const res = await request.delete(`/menus/${deleteAfter[0]._id}`)
-
         const resBefore = await request.get('/menus');
-        const deleteBefore = resBefore.body as Menus[];
+        const deleteBefore = resBefore.body as Menu[];
 
-        console.log('deleteBefore ', deleteBefore);
+        const res = await request.delete(`/menus/${deleteBefore[0]._id}`)
+
+        const resAfter = await request.get('/menus');
+        const deleteAfter = resAfter.body as Menu[];
+
+        console.log('deleteBefore ', deleteAfter);
 
         expect(res.status).toBe(200);
         expect(deleteBefore).toHaveLength(0);

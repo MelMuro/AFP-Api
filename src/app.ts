@@ -1,6 +1,6 @@
 import express, { Request, Response, Application } from "express";
 import { restaurantsRouter } from "./routes/restaurants/restaurants.router";
-import { menusRouter } from './routes/menus/menus.router';
+import { menusRouter } from './routes/menus/menu.router';
 import { connectToDb } from "./db/client";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";

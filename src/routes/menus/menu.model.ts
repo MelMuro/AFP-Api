@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 
-type Menus = {
+type Menu = {
     _id: ObjectId,
     restaurant: string,
     dishes: [
@@ -15,5 +15,4 @@ type Menus = {
         }
     ]
 }
-export default Menus
-// Duda con la bd, en los menus, 
+export default Menu

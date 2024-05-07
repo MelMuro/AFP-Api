@@ -1,6 +1,6 @@
-import { dbCollections } from './../../db/client';
+import { dbCollections } from '../../db/client';
 import { Request, Response, Router } from 'express';
-import Menus from './menus.model';
+import Menu from './menu.model';
 import { ObjectId } from 'mongodb';
 
 export const menusRouter = Router();
@@ -8,7 +8,7 @@ export const menusRouter = Router();
 //GetAll
 menusRouter.get('/', async (req: Request, res: Response) => {
     try {
-        const menus = await dbCollections.Menus?.find<Menus>({}).toArray();
+        const menus = await dbCollections.Menus?.find<Menu>({}).toArray();
         if (!menus) {
             res.status(404).send('Dish not found');
         }
@@ -23,7 +23,7 @@ menusRouter.get('/', async (req: Request, res: Response) => {
 menusRouter.get('/:dish', async (req: Request, res: Response) => {
     try {
         const name = req.params.dish.toLowerCase();
-        const menus = await dbCollections.Menus?.find<Menus>({
+        const menus = await dbCollections.Menus?.find<Menu>({
             'dishes.name': { $regex: new RegExp(`${name}`, 'i') }
         }).toArray();
 
@@ -51,7 +51,7 @@ menusRouter.get('/:restaurant/:dish', async (req: Request, res: Response) => {
     try {
         const restaurant = req.params.restaurant;
         const dishName = req.params.dish.toLowerCase();
-        const menu = await dbCollections.Menus?.findOne<Menus>({
+        const menu = await dbCollections.Menus?.findOne<Menu>({
             restaurant: restaurant,
             'dishes.name': { $regex: new RegExp(`${dishName}`, 'i') }
         });
