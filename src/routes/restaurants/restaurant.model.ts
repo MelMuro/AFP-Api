@@ -18,6 +18,6 @@ type Restaurant = {
 	email: string;
 	media: string[];
 	pictures: string[];
-	id: ObjectId;
+	_id: ObjectId;
 }
 export default Restaurant

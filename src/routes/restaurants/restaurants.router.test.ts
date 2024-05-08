@@ -36,7 +36,7 @@ describe('Restaurants Router tests', () => {
 		//Act
 		const res = await request.get('/restaurants/Test%20Restaurant%201');
 		const restaurant = res.body as Restaurant;
-
+		
 		//Assert
 		expect(res.statusCode).toBe(200);
 		expect(restaurant.location).toBe(1);
@@ -76,5 +76,42 @@ describe('Restaurants Router tests', () => {
 		// Assert
 		expect(res.statusCode).toBe(201);
 		expect(res.text).toBe('Successfully created a new restaurant');
+	});
+
+	//PUT
+	it('should update existing restaurant', async () => {
+		//gettin' info
+		const res = await request.get('/restaurants');
+		const restaurants = res.body as Restaurant[];
+
+		const updatedRestaurantData = {
+			name: 'Akitacaro',
+			description: 'Casa arroz',
+			category: 'Comida china'
+		};
+
+		const updateResponse = await request
+			.put(`/restaurants/${restaurants[0]._id}`)
+			.send(updatedRestaurantData);
+
+		expect(updateResponse.statusCode).toBe(200);
+		expect(updateResponse.text).toBe(`Successfully updated Restaurant`);
+	});
+
+	//DELETE
+	it('should delete restaurant', async () => {
+		//gettin' info
+		const res = await request.get('/restaurants');
+		const restaurants = res.body as Restaurant[];
+
+		//delete
+		const deleteResponse = await request.delete(
+			`/restaurants/${restaurants[0]._id}`
+		);
+
+		expect(deleteResponse.statusCode).toBe(200);
+		expect(deleteResponse.text).toContain(
+			`Successfully removed restaurant`
+		);
 	});
 });

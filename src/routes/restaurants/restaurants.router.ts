@@ -37,7 +37,6 @@ restaurantsRouter.get('/:name', async (req: Request, res: Response) => {
 			res.status(200).send(restaurant);
 		}
 	} catch (error) {
-		console.error('Error:', error);
 		res.status(500).send('Internal Server Error');
 	}
 });
@@ -52,9 +51,8 @@ restaurantsRouter.post('/', async (req: Request, res: Response) => {
 		result
 			? res.status(201).send(`Successfully created a new restaurant`)
 			: res.status(500).send('Failed to create a new restaurant.');
-	} catch (error: any) {
-		console.error(error);
-		res.status(500).send(error.message);
+	} catch (error) {
+		res.status(500).send(error);
 	}
 });
 
@@ -70,13 +68,10 @@ restaurantsRouter.put('/:id', async (req: Request, res: Response) => {
 		});
 
 		result
-			? res
-					.status(200)
-					.send(`Successfully updated Restaurant with id ${id}`)
-			: res.status(304).send(`Restaurant with id: ${id} not updated`);
-	} catch (error: any) {
-		console.error(error.message);
-		res.status(500).send(error.message);
+			? res.status(200).send(`Successfully updated Restaurant`)
+			: res.status(304).send(`Restaurant not updated`);
+	} catch (error) {
+		res.status(500).send(error);
 	}
 });
 
@@ -87,7 +82,7 @@ restaurantsRouter.delete('/:id', async (req: Request, res: Response) => {
 		const query = { _id: new ObjectId(id) };
 		const result = await dbCollections.Restaurants?.deleteOne(query);
 		if (result && result.deletedCount) {
-			res.status(202).send(
+			res.status(200).send(
 				`Successfully removed restaurant with id ${id}`
 			);
 		} else if (!result) {
@@ -95,8 +90,7 @@ restaurantsRouter.delete('/:id', async (req: Request, res: Response) => {
 		} else if (!result.deletedCount) {
 			res.status(404).send(`Restaurant with id ${id} does not exist`);
 		}
-	} catch (error: any) {
-		console.error(error.message);
-		res.status(500).send(error.message);
+	} catch (error) {
+		res.status(500).send(error);
 	}
 });
