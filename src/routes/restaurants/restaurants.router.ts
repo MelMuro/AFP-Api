@@ -37,7 +37,6 @@ restaurantsRouter.get('/:name', async (req: Request, res: Response) => {
 			res.status(200).send(restaurant);
 		}
 	} catch (error) {
-		console.error('Error:', error);
 		res.status(500).send('Internal Server Error');
 	}
 });
@@ -53,7 +52,6 @@ restaurantsRouter.post('/', async (req: Request, res: Response) => {
 			? res.status(201).send(`Successfully created a new restaurant`)
 			: res.status(500).send('Failed to create a new restaurant.');
 	} catch (error) {
-		console.error(error);
 		res.status(500).send(error);
 	}
 });
@@ -70,12 +68,9 @@ restaurantsRouter.put('/:id', async (req: Request, res: Response) => {
 		});
 
 		result
-			? res
-					.status(200)
-					.send(`Successfully updated Restaurant`)
+			? res.status(200).send(`Successfully updated Restaurant`)
 			: res.status(304).send(`Restaurant not updated`);
 	} catch (error) {
-		console.error(error);
 		res.status(500).send(error);
 	}
 });
@@ -96,7 +91,6 @@ restaurantsRouter.delete('/:id', async (req: Request, res: Response) => {
 			res.status(404).send(`Restaurant with id ${id} does not exist`);
 		}
 	} catch (error) {
-		console.error(error);
 		res.status(500).send(error);
 	}
 });
