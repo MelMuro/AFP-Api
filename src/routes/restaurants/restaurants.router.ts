@@ -21,7 +21,6 @@ restaurantsRouter.get('/', async (req: Request, res: Response) => {
 	}
 });
 
-//GET by name
 restaurantsRouter.get('/:name', async (req: Request, res: Response) => {
 	const name = req?.params?.name;
 
@@ -41,7 +40,6 @@ restaurantsRouter.get('/:name', async (req: Request, res: Response) => {
 	}
 });
 
-//POST
 restaurantsRouter.post('/', async (req: Request, res: Response) => {
 	try {
 		const newRestaurant = req.body as Restaurant;
@@ -56,7 +54,6 @@ restaurantsRouter.post('/', async (req: Request, res: Response) => {
 	}
 });
 
-//PUT
 restaurantsRouter.put('/:id', async (req: Request, res: Response) => {
 	const id = req?.params?.id;
 	try {
@@ -75,7 +72,6 @@ restaurantsRouter.put('/:id', async (req: Request, res: Response) => {
 	}
 });
 
-//DELETE
 restaurantsRouter.delete('/:id', async (req: Request, res: Response) => {
 	const id = req?.params?.id;
 	try {

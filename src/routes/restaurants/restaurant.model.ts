@@ -16,8 +16,14 @@ type Restaurant = {
 	};
 	phone: number;
 	email: string;
-	media: string[];
+	media: {
+		facebook?: string;
+		instagram?: string;
+		twitter?: string;
+		webSite?: string;
+	};
 	pictures: string[];
+	logo: string;
 	_id: ObjectId;
-}
-export default Restaurant
+};
+export default Restaurant;
