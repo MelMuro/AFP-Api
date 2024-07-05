@@ -8,15 +8,43 @@ db.Restaurants.insertMany([
 		description: 'Some test description',
 		category: 'Asian fusion',
 		location: 1,
-		schedule: {
-			monday: '8:00 - 17:00',
-			tuesday: '8:00 - 17:00',
-			wednesday: '8:00 - 17:00',
-			thursday: '8:00 - 17:00',
-			friday: '8:00 - 17:00',
-			saturday: '8:00 - 17:00',
-			sunday: '8:00 - 17:00'
-		},
+		schedule: [
+			{
+				name: 'Lunes',
+				start: '8:00',
+				end: '17:00'
+			},
+			{
+				name: 'Martes',
+				start: '8:00',
+				end: '17:00'
+			},
+			{
+				name: 'Miercoles',
+				start: '8:00',
+				end: '17:00'
+			},
+			{
+				name: 'Jueves',
+				start: '8:00',
+				end: '17:00'
+			},
+			{
+				name: 'Viernes',
+				start: '8:00',
+				end: '17:00'
+			},
+			{
+				name: 'Sabado',
+				start: '8:00',
+				end: '17:00'
+			},
+			{
+				name: 'Domingo',
+				start: '8:00',
+				end: '17:00'
+			}
+		],
 		phone: 6621234567,
 		email: 'restaurant@mail.com',
 		media: {
@@ -34,15 +62,43 @@ db.Restaurants.insertMany([
 		description: 'Another test description',
 		category: 'Chinese',
 		location: 2,
-		schedule: {
-			monday: '8:00 - 17:00',
-			tuesday: '8:00 - 17:00',
-			wednesday: '8:00 - 17:00',
-			thursday: '8:00 - 17:00',
-			friday: '8:00 - 17:00',
-			saturday: '8:00 - 17:00',
-			sunday: '8:00 - 17:00'
-		},
+		schedule: [
+			{
+				name: 'Lunes',
+				start: '8:00',
+				end: '17:00'
+			},
+			{
+				name: 'Martes',
+				start: '8:00',
+				end: '17:00'
+			},
+			{
+				name: 'Miercoles',
+				start: '8:00',
+				end: '17:00'
+			},
+			{
+				name: 'Jueves',
+				start: '8:00',
+				end: '17:00'
+			},
+			{
+				name: 'Viernes',
+				start: '8:00',
+				end: '17:00'
+			},
+			{
+				name: 'Sabado',
+				start: '8:00',
+				end: '17:00'
+			},
+			{
+				name: 'Domingo',
+				start: '8:00',
+				end: '17:00'
+			}
+		],
 		phone: 6621234567,
 		email: 'restaurant@mail.com',
 		media: {

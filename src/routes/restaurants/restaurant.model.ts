@@ -1,19 +1,17 @@
 import { ObjectId } from 'mongodb';
 
+type dayOfDay = {
+	name: string;
+	start: string;
+	end: string;
+};
+
 type Restaurant = {
 	name: string;
 	description: string;
 	category: string;
 	location: number;
-	schedule: {
-		monday: string;
-		tuesday: string;
-		wednesday: string;
-		thursday: string;
-		friday: string;
-		saturday: string;
-		sunday: string;
-	};
+	schedule: dayOfDay[];
 	phone: number;
 	email: string;
 	media: {
