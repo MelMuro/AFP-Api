@@ -33,15 +33,43 @@ export const seedDatabase = () => {
 		description: 'Some test description',
 		category: 'Test Category',
 		location: 1,
-		schedule: {
-			monday: '8:00 - 17:00',
-			tuesday: '8:00 - 17:00',
-			wednesday: '8:00 - 17:00',
-			thursday: '8:00 - 17:00',
-			friday: '8:00 - 17:00',
-			saturday: '8:00 - 17:00',
-			sunday: '8:00 - 17:00'
-		},
+		schedule: [
+			{
+				name: 'Lunes',
+				start: '8:00',
+				end: '17:00'
+			},
+			{
+				name: 'Martes',
+				start: '8:00',
+				end: '17:00'
+			},
+			{
+				name: 'Miercoles',
+				start: '8:00',
+				end: '17:00'
+			},
+			{
+				name: 'Jueves',
+				start: '8:00',
+				end: '17:00'
+			},
+			{
+				name: 'Viernes',
+				start: '8:00',
+				end: '17:00'
+			},
+			{
+				name: 'Sabado',
+				start: '8:00',
+				end: '17:00'
+			},
+			{
+				name: 'Domingo',
+				start: '8:00',
+				end: '17:00'
+			}
+		],
 		phone: 6621234567,
 		email: 'test@mail.com',
 		media: ['testLink.com', 'testLink2.com'],
