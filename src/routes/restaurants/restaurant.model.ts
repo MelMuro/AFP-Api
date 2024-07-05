@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 
-type dayOfDay = {
+type Day = {
 	name: string;
 	start: string;
 	end: string;
@@ -11,7 +11,7 @@ type Restaurant = {
 	description: string;
 	category: string;
 	location: number;
-	schedule: dayOfDay[];
+	schedule: Day[];
 	phone: number;
 	email: string;
 	media: {
