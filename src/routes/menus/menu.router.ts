@@ -1,5 +1,5 @@
-import { Request, Response, Router } from 'express';
 import { dbCollections } from '../../db/client';
+import { Request, Response, Router } from 'express';
 import Menu from './menu.model';
 import { ObjectId } from 'mongodb';
 
@@ -21,23 +21,24 @@ menusRouter.get('/', async (req: Request, res: Response) => {
 menusRouter.get('/:dish', async (req: Request, res: Response) => {
 	try {
 		const name = req.params.dish.toLowerCase();
-		const menu = await dbCollections.Menus?.findOne<Menu>({
+		const menus = await dbCollections.Menus?.find<Menu>({
 			'dishes.name': { $regex: new RegExp(`${name}`, 'i') }
+		}).toArray();
+
+		if (menus?.length === 0 || !menus) {
+			return res.status(404).send('Dish not found');
+		}
+
+		const result = menus.map((menu) => {
+			const dishes = menu.dishes.filter((dish) =>
+				dish.name.toLowerCase().includes(name)
+			);
+			return {
+				id: menu._id,
+				restaurant: menu.restaurant,
+				dishes: dishes
+			};
 		});
-		if (!menu) {
-			return res.status(404).send('Dish not found');
-		}
-		const dishes = menu.dishes.filter((dish: any) =>
-			dish.name.toLowerCase().includes(name)
-		);
-		if (dishes.length === 0) {
-			return res.status(404).send('Dish not found');
-		}
-		const result = {
-			id: menu._id,
-			restaurant: menu.restaurant,
-			dishes: dishes
-		};
 		res.status(200).send(result);
 	} catch (error) {
 		console.error(error);
@@ -56,7 +57,7 @@ menusRouter.get('/:restaurant/:dish', async (req: Request, res: Response) => {
 		if (!menu) {
 			return res.status(404).send('Restaurant not found');
 		}
-		const dishes = menu.dishes.filter((dish: any) =>
+		const dishes = menu.dishes.filter((dish) =>
 			dish.name.toLowerCase().includes(dishName)
 		);
 		if (!dishes) {
@@ -81,8 +82,7 @@ menusRouter.post('/', async (req: Request, res: Response) => {
 		if (!result) {
 			res.status(500).send(result);
 		}
-		const insertedMenu = result?.insertedId;
-		res.status(200).send(insertedMenu);
+		res.status(201).send(newMenu);
 	} catch (error) {
 		console.error(error);
 		res.status(500).send('Error insert menu');
@@ -100,7 +100,11 @@ menusRouter.put('/:id', async (req: Request, res: Response) => {
 		if (!result) {
 			res.status(500).send(result);
 		}
-		res.status(200).send(result);
+		const updateData = await dbCollections.Menus?.findOne(query);
+		if (!updateData) {
+			res.status(404).send(result);
+		}
+		res.status(200).send(updateData);
 	} catch (error) {
 		console.error(error);
 		res.status(500).send(error);

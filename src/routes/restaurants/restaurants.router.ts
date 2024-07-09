@@ -21,7 +21,6 @@ restaurantsRouter.get('/', async (req: Request, res: Response) => {
 	}
 });
 
-//GET by name
 restaurantsRouter.get('/:name', async (req: Request, res: Response) => {
 	const name = req?.params?.name;
 
@@ -37,12 +36,10 @@ restaurantsRouter.get('/:name', async (req: Request, res: Response) => {
 			res.status(200).send(restaurant);
 		}
 	} catch (error) {
-		console.error('Error:', error);
 		res.status(500).send('Internal Server Error');
 	}
 });
 
-//POST
 restaurantsRouter.post('/', async (req: Request, res: Response) => {
 	try {
 		const newRestaurant = req.body as Restaurant;
@@ -53,12 +50,10 @@ restaurantsRouter.post('/', async (req: Request, res: Response) => {
 			? res.status(201).send(`Successfully created a new restaurant`)
 			: res.status(500).send('Failed to create a new restaurant.');
 	} catch (error) {
-		console.error(error);
 		res.status(500).send(error);
 	}
 });
 
-//PUT
 restaurantsRouter.put('/:id', async (req: Request, res: Response) => {
 	const id = req?.params?.id;
 	try {
@@ -70,17 +65,13 @@ restaurantsRouter.put('/:id', async (req: Request, res: Response) => {
 		});
 
 		result
-			? res
-					.status(200)
-					.send(`Successfully updated Restaurant`)
+			? res.status(200).send(`Successfully updated Restaurant`)
 			: res.status(304).send(`Restaurant not updated`);
 	} catch (error) {
-		console.error(error);
 		res.status(500).send(error);
 	}
 });
 
-//DELETE
 restaurantsRouter.delete('/:id', async (req: Request, res: Response) => {
 	const id = req?.params?.id;
 	try {
@@ -96,7 +87,6 @@ restaurantsRouter.delete('/:id', async (req: Request, res: Response) => {
 			res.status(404).send(`Restaurant with id ${id} does not exist`);
 		}
 	} catch (error) {
-		console.error(error);
 		res.status(500).send(error);
 	}
 });
