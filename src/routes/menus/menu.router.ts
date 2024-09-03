@@ -46,6 +46,25 @@ menusRouter.get('/:dish', async (req: Request, res: Response) => {
 	}
 });
 
+menusRouter.get('/restaurant/:name', async (req: Request, res: Response) => {
+	try {
+		const restaurantName = req.params.name;
+
+		const menu = await dbCollections.Menus?.findOne<Menu>({
+			restaurant: restaurantName
+		});
+
+		if (!menu) {
+			return res.status(404).send('Restaurant or menu not found');
+		}
+
+		res.status(200).send(menu);
+	} catch (error) {
+		console.error(error);
+		res.status(500).send('que pedo');
+	}
+});
+
 menusRouter.get('/:restaurant/:dish', async (req: Request, res: Response) => {
 	try {
 		const restaurant = req.params.restaurant;
