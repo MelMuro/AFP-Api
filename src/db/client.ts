@@ -13,7 +13,6 @@ export const connectToDb = async () => {
         mongoClient = new MongoClient(process.env.DB_CONN_STRING || "");
         await mongoClient.connect();
         const db = mongoClient.db(process.env.DB_NAME);
-        dbCollections.Menus = db.collection(process.env.DB_MENUS_COLLECTION || "");
         dbCollections.Restaurants = db.collection(process.env.DB_RESTAURANTS_COLLECTION || "")
     } catch (error) {
         console.log('Error');

@@ -20,6 +20,6 @@ app.get('/', (req: Request, res: Response) => {
 	res.send({ message: 'Welcome to Express & TypeScript Server' });
 });
 app.use('/restaurants', restaurantsRouter);
-app.use('/menus', menusRouter);
+app.use('/menu', menusRouter);
 
 export default app;

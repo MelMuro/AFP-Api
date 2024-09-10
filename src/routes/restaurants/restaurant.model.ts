@@ -1,5 +1,16 @@
 import { ObjectId } from 'mongodb';
 
+
+type Menu = {
+	category: string,
+	name: string,
+	description: string,
+	price: number,
+	picture: string,
+	isAvaible: boolean,
+	tag: string,
+}
+
 type Day = {
 	name: string;
 	start: string;
@@ -11,6 +22,7 @@ type Restaurant = {
 	description: string;
 	category: string;
 	location: number;
+	menu: Menu[]
 	schedule: Day[];
 	phone: number;
 	email: string;
