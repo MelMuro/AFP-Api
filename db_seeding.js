@@ -10,6 +10,7 @@ db.Restaurants.insertMany([
 		location: 1,
 		menu: [
 			{
+				id: '123456789',
 				category: 'plato fuerte',
 				name: 'chilaquiles',
 				description: 'totopos de maiz con salsa y queso',
@@ -20,6 +21,7 @@ db.Restaurants.insertMany([
 				tag: 'enchiloso'
 			},
 			{
+				id: '64524312',
 				category: 'postre',
 				name: 'carlota',
 				description: 'galletas maria con yogur griego y limon',
@@ -96,6 +98,7 @@ db.Restaurants.insertMany([
 		menu:
 			[
 				{
+					id: '4568978',
 					category: 'plato fuerte',
 					name: 'Espaguetti',
 					description: 'Prepara un delicioso ESPAGUETI ROJO con la cremosidad y practicidad de Media Crema y comparte en tus comidas con familia ¡Les encantará!.',
@@ -106,6 +109,7 @@ db.Restaurants.insertMany([
 					tag: 'enchiloso'
 				},
 				{
+					id: '6889745',
 					category: 'entrada',
 					name: 'frutas',
 					description: 'berrys almendras, sandia, piña con yogurt',
@@ -116,6 +120,7 @@ db.Restaurants.insertMany([
 					tag: 'saludable'
 				},
 				{
+					id: '4564151546',
 					category: 'Bebida',
 					name: 'Sake',
 					description: 'Sake is an alcoholic beverage made from rice through fermentation and filtration. For fermentation of sake, rice koji, a kind of fungi grown on rice, is used. Sake has been made for over 1,000 years all over the Japanese islands.',
@@ -185,6 +190,7 @@ db.Restaurants.insertMany([
 		location: 3,
 		menu: [
 			{
+				id: '1568415',
 				category: 'palto fuerte',
 				name: 'Hamburguesa gourmet',
 				description: 'Pieza de carne picada aplastada y con forma redondeada, mezclada con diversos ingredientes, que se hace a la plancha, a la parrilla o frita.',
@@ -195,6 +201,7 @@ db.Restaurants.insertMany([
 				tag: 'carne'
 			},
 			{
+				id: '48948454',
 				category: 'postre',
 				name: 'cheescake',
 				description: 'Cheescake de leche de codornis amarilla',
@@ -205,6 +212,7 @@ db.Restaurants.insertMany([
 				tag: 'carne'
 			},
 			{
+				id: '1568789',
 				category: 'Bebida',
 				name: 'Piña colada',
 				description: 'Alcohon con jugo de piña',
@@ -272,6 +280,7 @@ db.Restaurants.insertMany([
 		location: 4,
 		menu: [
 			{
+				id: '18548978',
 				category: 'Postre',
 				name: 'Macarrones',
 				description: 'Galletas redondas hechas de almendras molidas, azúcar glas y claras de huevo',
@@ -282,6 +291,7 @@ db.Restaurants.insertMany([
 				tag: 'postre'
 			},
 			{
+				id: '35424878',
 				category: 'entrada',
 				name: 'Ensalada verde',
 				description: 'Plato preparado con una o varias hortalizas, gralm . crudas, y aderezado básicamente con aceite, vinagre y sal.',
@@ -292,6 +302,7 @@ db.Restaurants.insertMany([
 				tag: 'saludable'
 			},
 			{
+				id: '8487687',
 				category: 'entrada',
 				name: 'Tocino con pollo',
 				description: 'Rollos de pollo enrollados en tocino',
@@ -365,6 +376,7 @@ db.Restaurants.insertMany([
 		location: 5,
 		menu: [
 			{
+				id: '514988419',
 				category: 'plato fuerte',
 				name: 'Emparedado de pollo',
 				description: 'Emparedado de pollo con salsas',
@@ -375,6 +387,7 @@ db.Restaurants.insertMany([
 				tag: 'sandwish'
 			},
 			{
+				id: '15687486',
 				category: 'plato fuerte',
 				name: 'Hamburguesa de pollo',
 				description: 'Deliciosa hamburguesa con pechuga de pollo y papas',
@@ -385,6 +398,7 @@ db.Restaurants.insertMany([
 				tag: 'carne'
 			},
 			{
+				id: '9965458',
 				category: 'plato fuerte',
 				name: 'Ramen de cerdo',
 				description: 'Ramen con caldo de cerdo y chuleta en trozos',
@@ -395,6 +409,7 @@ db.Restaurants.insertMany([
 				tag: 'ramen'
 			},
 			{
+				id: '159774',
 				category: 'bebidas',
 				name: 'Smoothie',
 				description: 'Esta bebida conjuga frutas o verduras y una base líquida',

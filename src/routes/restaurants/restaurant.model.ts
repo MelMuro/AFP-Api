@@ -2,6 +2,7 @@ import { ObjectId } from 'mongodb';
 
 
 type Menu = {
+	id: ObjectId;
 	category: string,
 	name: string,
 	description: string,

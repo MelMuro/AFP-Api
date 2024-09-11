@@ -1,6 +1,7 @@
 import { Collection } from "mongodb";
 
-export default interface Collections {
+type Collections = {
     Menus?: Collection;
     Restaurants?: Collection;
 }
+export default Collections
