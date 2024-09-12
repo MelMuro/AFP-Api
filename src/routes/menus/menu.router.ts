@@ -65,6 +65,7 @@ menusRouter.post('/:id', async (req: Request, res: Response) => {
 	try {
 		const { id } = req.params;
 		const newItem = req.body;
+		newItem._id = new ObjectId();
 		const findRestaurant = await dbCollections.Restaurants?.findOne<Restaurant>({ _id: new ObjectId(id) });
 		if (!findRestaurant) {
 			return res.status(404).send('Element not found');
@@ -106,17 +107,45 @@ menusRouter.put('/:id', async (req: Request, res: Response) => {
 	}
 });
 
-menusRouter.delete('/:id', async (req: Request, res: Response) => {
-	const id = req?.params?.id;
+
+menusRouter.delete('/:menuId', async (req: Request, res: Response) => {
 	try {
-		const query = { _id: new ObjectId(id) };
-		const result = await dbCollections.Menus?.deleteOne(query);
-		if (!result) {
-			res.status(500).send(result);
+		const { menuId } = req.params;
+
+		const updatedRestaurant = await dbCollections.Restaurants?.updateOne(
+			{ 'menu._id': new ObjectId(menuId) },
+			{ $pull: { menu: { _id: new ObjectId(menuId) } } } as Partial<Restaurant>
+		);
+
+		if (updatedRestaurant?.modifiedCount === 1) {
+			res.status(200).send('Menu item removed successfully');
+		} else {
+			res.status(500).send('Failed to update restaurant');
 		}
-		res.status(200).send(result);
 	} catch (error) {
-		console.error(error);
-		res.status(500).send(error);
+		console.error('Error removing item from menu:', error);
+		res.status(500).send('Error removing item from menu');
 	}
 });
+
+//I wil continous with this
+
+// menusRouter.delete('/:restaurant/:menuId', async (req: Request, res: Response) => {
+// 	try {
+// 		const { menuId } = req.params;
+
+// 		const updatedRestaurant = await dbCollections.Restaurants?.updateOne(
+// 			{ 'menu._id': new ObjectId(menuId) },
+// 			{ $pull: { menu: { _id: new ObjectId(menuId) } } } as Partial<Restaurant>
+// 		);
+
+// 		if (updatedRestaurant?.modifiedCount === 1) {
+// 			res.status(200).send('Menu item removed successfully');
+// 		} else {
+// 			res.status(500).send('Failed to update restaurant');
+// 		}
+// 	} catch (error) {
+// 		console.error('Error removing item from menu:', error);
+// 		res.status(500).send('Error removing item from menu');
+// 	}
+// });

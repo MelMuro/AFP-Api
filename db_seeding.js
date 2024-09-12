@@ -10,7 +10,6 @@ db.Restaurants.insertMany([
 		location: 1,
 		menu: [
 			{
-				id: '123456789',
 				category: 'plato fuerte',
 				name: 'chilaquiles',
 				description: 'totopos de maiz con salsa y queso',
@@ -18,10 +17,10 @@ db.Restaurants.insertMany([
 				picture:
 					'https://patijinich.com/es/wp-content/uploads/sites/3/2017/07/207-chilaquiles-verdes.jpg',
 				isAvailable: true,
-				tag: 'enchiloso'
+				tag: 'enchiloso',
+				_id: '123456789',
 			},
 			{
-				id: '64524312',
 				category: 'postre',
 				name: 'carlota',
 				description: 'galletas maria con yogur griego y limon',
@@ -29,7 +28,8 @@ db.Restaurants.insertMany([
 				picture:
 					'https://www.gastrolabweb.com/postres/2023/2/14/carlota-de-limon-un-bocado-de-alegria-al-corazon-que-preparas-con-esta-receta-33298.html#&gid=1&pid=1',
 				isAvailable: true,
-				tag: ''
+				tag: '',
+				_id: '64524312',
 			}
 		],
 		schedule: [
@@ -98,7 +98,6 @@ db.Restaurants.insertMany([
 		menu:
 			[
 				{
-					id: '4568978',
 					category: 'plato fuerte',
 					name: 'Espaguetti',
 					description: 'Prepara un delicioso ESPAGUETI ROJO con la cremosidad y practicidad de Media Crema y comparte en tus comidas con familia ¡Les encantará!.',
@@ -106,10 +105,10 @@ db.Restaurants.insertMany([
 					picture:
 						'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600',
 					isAvailable: true,
-					tag: 'enchiloso'
+					tag: 'enchiloso',
+					_id: '4568978'
 				},
 				{
-					id: '6889745',
 					category: 'entrada',
 					name: 'frutas',
 					description: 'berrys almendras, sandia, piña con yogurt',
@@ -117,10 +116,10 @@ db.Restaurants.insertMany([
 					picture:
 						'https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg?auto=compress&cs=tinysrgb&w=600',
 					isAvailable: true,
-					tag: 'saludable'
+					tag: 'saludable',
+					_id: '6889745',
 				},
 				{
-					id: '4564151546',
 					category: 'Bebida',
 					name: 'Sake',
 					description: 'Sake is an alcoholic beverage made from rice through fermentation and filtration. For fermentation of sake, rice koji, a kind of fungi grown on rice, is used. Sake has been made for over 1,000 years all over the Japanese islands.',
@@ -128,7 +127,8 @@ db.Restaurants.insertMany([
 					picture:
 						'https://images.pexels.com/photos/18198515/pexels-photo-18198515/free-photo-of-taza-copa-mesa-naturaleza-muerta.jpeg?auto=compress&cs=tinysrgb&w=600',
 					isAvailable: false,
-					tag: 'alcohol'
+					tag: 'alcohol',
+					_id: '4564151546',
 				}
 			],
 
@@ -190,7 +190,6 @@ db.Restaurants.insertMany([
 		location: 3,
 		menu: [
 			{
-				id: '1568415',
 				category: 'palto fuerte',
 				name: 'Hamburguesa gourmet',
 				description: 'Pieza de carne picada aplastada y con forma redondeada, mezclada con diversos ingredientes, que se hace a la plancha, a la parrilla o frita.',
@@ -198,10 +197,10 @@ db.Restaurants.insertMany([
 				picture:
 					'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&w=600',
 				isAvailable: true,
-				tag: 'carne'
+				tag: 'carne',
+				_id: '1568415',
 			},
 			{
-				id: '48948454',
 				category: 'postre',
 				name: 'cheescake',
 				description: 'Cheescake de leche de codornis amarilla',
@@ -209,10 +208,10 @@ db.Restaurants.insertMany([
 				picture:
 					'https://images.pexels.com/photos/1126359/pexels-photo-1126359.jpeg?auto=compress&cs=tinysrgb&w=600',
 				isAvailable: false,
-				tag: 'carne'
+				tag: 'carne',
+				_id: '48948454',
 			},
 			{
-				id: '1568789',
 				category: 'Bebida',
 				name: 'Piña colada',
 				description: 'Alcohon con jugo de piña',
@@ -220,7 +219,8 @@ db.Restaurants.insertMany([
 				picture:
 					'https://images.pexels.com/photos/338713/pexels-photo-338713.jpeg?auto=compress&cs=tinysrgb&w=600',
 				isAvailable: true,
-				tag: 'alcohol'
+				tag: 'alcohol',
+				_id: '1568789',
 			}
 		],
 		schedule: [
@@ -280,7 +280,6 @@ db.Restaurants.insertMany([
 		location: 4,
 		menu: [
 			{
-				id: '18548978',
 				category: 'Postre',
 				name: 'Macarrones',
 				description: 'Galletas redondas hechas de almendras molidas, azúcar glas y claras de huevo',
@@ -288,10 +287,10 @@ db.Restaurants.insertMany([
 				picture:
 					'https://images.pexels.com/photos/239581/pexels-photo-239581.jpeg?auto=compress&cs=tinysrgb&w=600',
 				isAvailable: true,
-				tag: 'postre'
+				tag: 'postre',
+				_id: '18548978',
 			},
 			{
-				id: '35424878',
 				category: 'entrada',
 				name: 'Ensalada verde',
 				description: 'Plato preparado con una o varias hortalizas, gralm . crudas, y aderezado básicamente con aceite, vinagre y sal.',
@@ -299,10 +298,10 @@ db.Restaurants.insertMany([
 				picture:
 					'https://images.pexels.com/photos/1211887/pexels-photo-1211887.jpeg?auto=compress&cs=tinysrgb&w=600',
 				isAvailable: true,
-				tag: 'saludable'
+				tag: 'saludable',
+				_id: '35424878',
 			},
 			{
-				id: '8487687',
 				category: 'entrada',
 				name: 'Tocino con pollo',
 				description: 'Rollos de pollo enrollados en tocino',
@@ -310,7 +309,8 @@ db.Restaurants.insertMany([
 				picture:
 					'https://images.pexels.com/photos/416471/pexels-photo-416471.jpeg?auto=compress&cs=tinysrgb&w=600',
 				isAvailable: true,
-				tag: 'carne'
+				tag: 'carne',
+				_id: '8487687',
 			}
 		],
 		schedule: [
@@ -376,7 +376,6 @@ db.Restaurants.insertMany([
 		location: 5,
 		menu: [
 			{
-				id: '514988419',
 				category: 'plato fuerte',
 				name: 'Emparedado de pollo',
 				description: 'Emparedado de pollo con salsas',
@@ -384,10 +383,10 @@ db.Restaurants.insertMany([
 				picture:
 					'https://images.pexels.com/photos/1633525/pexels-photo-1633525.jpeg?auto=compress&cs=tinysrgb&w=600',
 				isAvailable: true,
-				tag: 'sandwish'
+				tag: 'sandwish',
+				_id: '514988419',
 			},
 			{
-				id: '15687486',
 				category: 'plato fuerte',
 				name: 'Hamburguesa de pollo',
 				description: 'Deliciosa hamburguesa con pechuga de pollo y papas',
@@ -395,10 +394,10 @@ db.Restaurants.insertMany([
 				picture:
 					'https://images.pexels.com/photos/1199957/pexels-photo-1199957.jpeg?auto=compress&cs=tinysrgb&w=600',
 				isAvailable: true,
-				tag: 'carne'
+				tag: 'carne',
+				_id: '15687486',
 			},
 			{
-				id: '9965458',
 				category: 'plato fuerte',
 				name: 'Ramen de cerdo',
 				description: 'Ramen con caldo de cerdo y chuleta en trozos',
@@ -406,10 +405,10 @@ db.Restaurants.insertMany([
 				picture:
 					'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=600',
 				isAvailable: true,
-				tag: 'ramen'
+				tag: 'ramen',
+				_id: '9965458',
 			},
 			{
-				id: '159774',
 				category: 'bebidas',
 				name: 'Smoothie',
 				description: 'Esta bebida conjuga frutas o verduras y una base líquida',
@@ -417,7 +416,8 @@ db.Restaurants.insertMany([
 				picture:
 					'https://images.pexels.com/photos/1132558/pexels-photo-1132558.jpeg?auto=compress&cs=tinysrgb&w=600',
 				isAvailable: false,
-				tag: 'bebida'
+				tag: 'bebida',
+				_id: '159774',
 			}
 		],
 		schedule: [
