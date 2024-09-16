@@ -123,8 +123,7 @@ menusRouter.put('/:id', async (req: Request, res: Response) => {
 
 menusRouter.delete('/:restaurantId/:menuId', async (req: Request, res: Response) => {
 	try {
-		const { restaurantId } = req.params;
-		const { menuId } = req.params;
+		const { restaurantId, menuId } = req.params;
 
 		const updatedRestaurant = await dbCollections.Restaurants?.updateOne(
 			{

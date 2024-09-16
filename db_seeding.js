@@ -1,3 +1,5 @@
+const { ObjectId } = require('mongodb');
+
 db = connect('mongodb://localhost/AFP');
 
 db.dropDatabase();
@@ -18,7 +20,7 @@ db.Restaurants.insertMany([
 					'https://patijinich.com/es/wp-content/uploads/sites/3/2017/07/207-chilaquiles-verdes.jpg',
 				isAvailable: true,
 				tag: 'enchiloso',
-				_id: '123456789',
+				_id: new ObjectId()
 			},
 			{
 				category: 'postre',
@@ -29,7 +31,7 @@ db.Restaurants.insertMany([
 					'https://www.gastrolabweb.com/postres/2023/2/14/carlota-de-limon-un-bocado-de-alegria-al-corazon-que-preparas-con-esta-receta-33298.html#&gid=1&pid=1',
 				isAvailable: true,
 				tag: '',
-				_id: '64524312',
+				_id: new ObjectId()
 			}
 		],
 		schedule: [
@@ -106,7 +108,7 @@ db.Restaurants.insertMany([
 						'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600',
 					isAvailable: true,
 					tag: 'enchiloso',
-					_id: '4568978'
+					_id: new ObjectId()
 				},
 				{
 					category: 'entrada',
@@ -117,7 +119,7 @@ db.Restaurants.insertMany([
 						'https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg?auto=compress&cs=tinysrgb&w=600',
 					isAvailable: true,
 					tag: 'saludable',
-					_id: '6889745',
+					_id: new ObjectId()
 				},
 				{
 					category: 'Bebida',
@@ -128,7 +130,7 @@ db.Restaurants.insertMany([
 						'https://images.pexels.com/photos/18198515/pexels-photo-18198515/free-photo-of-taza-copa-mesa-naturaleza-muerta.jpeg?auto=compress&cs=tinysrgb&w=600',
 					isAvailable: false,
 					tag: 'alcohol',
-					_id: '4564151546',
+					_id: new ObjectId()
 				}
 			],
 
@@ -198,7 +200,7 @@ db.Restaurants.insertMany([
 					'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&w=600',
 				isAvailable: true,
 				tag: 'carne',
-				_id: '1568415',
+				_id: new ObjectId()
 			},
 			{
 				category: 'postre',
@@ -209,7 +211,7 @@ db.Restaurants.insertMany([
 					'https://images.pexels.com/photos/1126359/pexels-photo-1126359.jpeg?auto=compress&cs=tinysrgb&w=600',
 				isAvailable: false,
 				tag: 'carne',
-				_id: '48948454',
+				_id: new ObjectId()
 			},
 			{
 				category: 'Bebida',
@@ -220,7 +222,7 @@ db.Restaurants.insertMany([
 					'https://images.pexels.com/photos/338713/pexels-photo-338713.jpeg?auto=compress&cs=tinysrgb&w=600',
 				isAvailable: true,
 				tag: 'alcohol',
-				_id: '1568789',
+				_id: new ObjectId()
 			}
 		],
 		schedule: [
@@ -288,7 +290,7 @@ db.Restaurants.insertMany([
 					'https://images.pexels.com/photos/239581/pexels-photo-239581.jpeg?auto=compress&cs=tinysrgb&w=600',
 				isAvailable: true,
 				tag: 'postre',
-				_id: '18548978',
+				_id: new ObjectId()
 			},
 			{
 				category: 'entrada',
@@ -299,7 +301,7 @@ db.Restaurants.insertMany([
 					'https://images.pexels.com/photos/1211887/pexels-photo-1211887.jpeg?auto=compress&cs=tinysrgb&w=600',
 				isAvailable: true,
 				tag: 'saludable',
-				_id: '35424878',
+				_id: new ObjectId()
 			},
 			{
 				category: 'entrada',
@@ -310,7 +312,7 @@ db.Restaurants.insertMany([
 					'https://images.pexels.com/photos/416471/pexels-photo-416471.jpeg?auto=compress&cs=tinysrgb&w=600',
 				isAvailable: true,
 				tag: 'carne',
-				_id: '8487687',
+				_id: new ObjectId()
 			}
 		],
 		schedule: [
@@ -384,7 +386,7 @@ db.Restaurants.insertMany([
 					'https://images.pexels.com/photos/1633525/pexels-photo-1633525.jpeg?auto=compress&cs=tinysrgb&w=600',
 				isAvailable: true,
 				tag: 'sandwish',
-				_id: '514988419',
+				_id: new ObjectId()
 			},
 			{
 				category: 'plato fuerte',
@@ -395,7 +397,7 @@ db.Restaurants.insertMany([
 					'https://images.pexels.com/photos/1199957/pexels-photo-1199957.jpeg?auto=compress&cs=tinysrgb&w=600',
 				isAvailable: true,
 				tag: 'carne',
-				_id: '15687486',
+				_id: new ObjectId()
 			},
 			{
 				category: 'plato fuerte',
@@ -406,7 +408,7 @@ db.Restaurants.insertMany([
 					'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=600',
 				isAvailable: true,
 				tag: 'ramen',
-				_id: '9965458',
+				_id: new ObjectId()
 			},
 			{
 				category: 'bebidas',
@@ -417,7 +419,7 @@ db.Restaurants.insertMany([
 					'https://images.pexels.com/photos/1132558/pexels-photo-1132558.jpeg?auto=compress&cs=tinysrgb&w=600',
 				isAvailable: false,
 				tag: 'bebida',
-				_id: '159774',
+				_id: new ObjectId()
 			}
 		],
 		schedule: [
