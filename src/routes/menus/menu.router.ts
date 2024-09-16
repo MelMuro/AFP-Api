@@ -19,7 +19,7 @@ menusRouter.get('/', async (req: Request, res: Response) => {
 });
 
 menusRouter.get('/:restaurant', async (req: Request, res: Response) => {
-	const restaurant = req?.params?.restaurant;
+	const { restaurant } = req.params;
 	try {
 		let query;
 		if (ObjectId.isValid(restaurant)) {
@@ -32,11 +32,12 @@ menusRouter.get('/:restaurant', async (req: Request, res: Response) => {
 		if (!menuItem) {
 			res.status(404).send('Dish not found');
 		}
-
-		res.status(200).send({
+		const result = {
+			id: menuItem?._id,
 			restaurant: menuItem?.name,
 			menu: menuItem?.menu
-		});
+		};
+		res.status(200).send(result);
 	} catch (error) {
 		console.error(error);
 		res.status(500).send('Error Dishes');
@@ -62,6 +63,7 @@ menusRouter.get('/:restaurant/:menu', async (req: Request, res: Response) => {
 		}
 		const result = {
 			id: findMenu._id,
+			restaurant: findMenu.name,
 			menu: dishes
 		};
 		res.status(200).send(result);
@@ -142,25 +144,3 @@ menusRouter.delete('/:restaurantId/:menuId', async (req: Request, res: Response)
 		res.status(500).send('Error removing item from menu');
 	}
 });
-
-//I wil continous with this
-
-// menusRouter.delete('/:restaurant/:menuId', async (req: Request, res: Response) => {
-// 	try {
-// 		const { menuId } = req.params;
-
-// 		const updatedRestaurant = await dbCollections.Restaurants?.updateOne(
-// 			{ 'menu._id': new ObjectId(menuId) },
-// 			{ $pull: { menu: { _id: new ObjectId(menuId) } } } as Partial<Restaurant>
-// 		);
-
-// 		if (updatedRestaurant?.modifiedCount === 1) {
-// 			res.status(200).send('Menu item removed successfully');
-// 		} else {
-// 			res.status(500).send('Failed to update restaurant');
-// 		}
-// 	} catch (error) {
-// 		console.error('Error removing item from menu:', error);
-// 		res.status(500).send('Error removing item from menu');
-// 	}
-// });
