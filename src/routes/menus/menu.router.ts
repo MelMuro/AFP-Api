@@ -21,11 +21,22 @@ menusRouter.get('/', async (req: Request, res: Response) => {
 menusRouter.get('/:restaurant', async (req: Request, res: Response) => {
 	const restaurant = req?.params?.restaurant;
 	try {
-		const menus = await dbCollections.Restaurants?.findOne<Restaurant>({ name: restaurant });
-		if (!menus) {
+		let query;
+		if (ObjectId.isValid(restaurant)) {
+			query = { _id: new ObjectId(restaurant) };
+		} else {
+			query = { name: restaurant };
+		}
+
+		const menuItem = await dbCollections.Restaurants?.findOne<Restaurant>(query);
+		if (!menuItem) {
 			res.status(404).send('Dish not found');
 		}
-		res.status(200).send(menus?.menu);
+
+		res.status(200).send({
+			restaurant: menuItem?.name,
+			menu: menuItem?.menu
+		});
 	} catch (error) {
 		console.error(error);
 		res.status(500).send('Error Dishes');
@@ -108,12 +119,16 @@ menusRouter.put('/:id', async (req: Request, res: Response) => {
 });
 
 
-menusRouter.delete('/:menuId', async (req: Request, res: Response) => {
+menusRouter.delete('/:restaurant/:menuId', async (req: Request, res: Response) => {
 	try {
 		const { menuId } = req.params;
+		const { restaurantId } = req.params;
 
 		const updatedRestaurant = await dbCollections.Restaurants?.updateOne(
-			{ 'menu._id': new ObjectId(menuId) },
+			{
+				_id: new ObjectId(restaurantId),
+				'menu._id': new ObjectId(menuId)
+			},
 			{ $pull: { menu: { _id: new ObjectId(menuId) } } } as Partial<Restaurant>
 		);
 
