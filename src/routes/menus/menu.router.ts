@@ -98,27 +98,44 @@ menusRouter.post('/:id', async (req: Request, res: Response) => {
 	}
 });
 
-menusRouter.put('/:id', async (req: Request, res: Response) => {
-	const id = req?.params?.id;
+menusRouter.put('/:restaurantId/:menuId', async (req: Request, res: Response) => {
 	try {
+		const { restaurantId, menuId } = req.params;
 		const updatedMenu = req.body;
-		const query = { _id: new ObjectId(id) };
-		const result = await dbCollections.Menus?.updateOne(query, {
-			$set: updatedMenu
-		});
-		if (!result) {
-			res.status(500).send(result);
+
+		const findDish = await dbCollections.Restaurants?.findOne(
+			{ _id: new ObjectId(restaurantId), 'menu._id': new ObjectId(menuId) },
+			{ projection: { 'menu.$': 1 } }
+		)
+
+		if (!findDish || !findDish.menu || findDish.menu.length === 0) {
+			return res.status(404).send('Element not found');
 		}
-		const updateData = await dbCollections.Menus?.findOne(query);
+
+		const currentMenu = findDish.menu[0];
+		const updatedMenuItem = { ...currentMenu, ...updatedMenu };
+
+		const updateData = await dbCollections.Restaurants?.updateOne(
+			{
+				_id: new ObjectId(restaurantId),
+				'menu._id': new ObjectId(menuId)
+			},
+			{ $set: { 'menu.$': updatedMenuItem } }
+		);
 		if (!updateData) {
-			res.status(404).send(result);
+			return res.status(404).send('Element not found');
 		}
-		res.status(200).send(updateData);
+		if (updateData?.modifiedCount === 1) {
+			res.status(200).send('Menu item updated successfully');
+		} else {
+			res.status(500).send('Failed to update restaurant');
+		}
 	} catch (error) {
 		console.error(error);
 		res.status(500).send(error);
 	}
 });
+
 
 
 menusRouter.delete('/:restaurantId/:menuId', async (req: Request, res: Response) => {
@@ -132,11 +149,13 @@ menusRouter.delete('/:restaurantId/:menuId', async (req: Request, res: Response)
 			},
 			{ $pull: { menu: { _id: new ObjectId(menuId) } } } as Partial<Restaurant>
 		);
-
+		if (!updatedRestaurant) {
+			return res.status(404).send('Element not found');
+		}
 		if (updatedRestaurant?.modifiedCount === 1) {
 			res.status(200).send('Menu item removed successfully');
 		} else {
-			res.status(500).send('Failed to update restaurant');
+			res.status(500).send('Failed to deleted restaurant');
 		}
 	} catch (error) {
 		console.error('Error removing item from menu:', error);
