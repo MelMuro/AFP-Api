@@ -74,18 +74,18 @@ menusRouter.get('/:restaurant/:menu', async (req: Request, res: Response) => {
 });
 
 
-menusRouter.post('/:id', async (req: Request, res: Response) => {
+menusRouter.post('/:restaurantId', async (req: Request, res: Response) => {
 	try {
-		const { id } = req.params;
+		const { restaurantId } = req.params;
 		const newItem = req.body;
 		newItem._id = new ObjectId();
-		const findRestaurant = await dbCollections.Restaurants?.findOne<Restaurant>({ _id: new ObjectId(id) });
+		const findRestaurant = await dbCollections.Restaurants?.findOne<Restaurant>({ _id: new ObjectId(restaurantId) });
 		if (!findRestaurant) {
 			return res.status(404).send('Element not found');
 		}
 
 		const updatedRestaurant = await dbCollections.Restaurants?.updateOne(
-			{ _id: new ObjectId(id) },
+			{ _id: new ObjectId(restaurantId) },
 			{ $push: { menu: newItem } }
 		);
 

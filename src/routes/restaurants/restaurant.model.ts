@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 
-export type Menu = {
+export type MenuItem = {
 	category: string;
 	name: string;
 	description: string;
@@ -22,7 +22,7 @@ export type Restaurant = {
 	description: string;
 	category: string;
 	location: number;
-	menu: Menu[];
+	menu: MenuItem[];
 	schedule: Day[];
 	phone: number;
 	email: string;
