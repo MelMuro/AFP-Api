@@ -1,91 +1,70 @@
 import { dbCollections } from '../../db/client';
 import { Request, Response, Router } from 'express';
-import Menu from './menu.model';
 import { ObjectId } from 'mongodb';
+import Restaurant from '../restaurants/restaurant.model';
 
 export const menusRouter = Router();
 
 menusRouter.get('/', async (req: Request, res: Response) => {
 	try {
-		const menus = await dbCollections.Menus?.find<Menu>({}).toArray();
+		const menus = await dbCollections.Restaurants?.find<Restaurant>({}).toArray();
 		if (!menus) {
 			res.status(404).send('Dish not found');
 		}
-		res.status(200).send(menus);
+		res.status(200).send(menus?.map(dishes => dishes.menu));
 	} catch (error) {
 		console.error(error);
 		res.status(500).send('Error Dishes');
 	}
 });
 
-menusRouter.get('/:dish', async (req: Request, res: Response) => {
+menusRouter.get('/:restaurant', async (req: Request, res: Response) => {
+	const { restaurant } = req.params;
 	try {
-		const name = req.params.dish.toLowerCase();
-		const menus = await dbCollections.Menus?.find<Menu>({
-			'dishes.name': { $regex: new RegExp(`${name}`, 'i') }
-		}).toArray();
-
-		if (menus?.length === 0 || !menus) {
-			return res.status(404).send('Dish not found');
+		let query;
+		if (ObjectId.isValid(restaurant)) {
+			query = { _id: new ObjectId(restaurant) };
+		} else {
+			query = { name: restaurant };
 		}
 
-		const result = menus.map((menu) => {
-			const dishes = menu.dishes.filter((dish) =>
-				dish.name.toLowerCase().includes(name)
-			);
-			return {
-				id: menu._id,
-				restaurant: menu.restaurant,
-				dishes: dishes
-			};
-		});
+		const menuItem = await dbCollections.Restaurants?.findOne<Restaurant>(query);
+		if (!menuItem) {
+			res.status(404).send('Dish not found');
+		}
+		const result = {
+			id: menuItem?._id,
+			restaurant: menuItem?.name,
+			menu: menuItem?.menu
+		};
 		res.status(200).send(result);
 	} catch (error) {
 		console.error(error);
-		res.status(500).send('Error searching dishes');
+		res.status(500).send('Error Dishes');
 	}
 });
 
-menusRouter.get('/restaurant/:name', async (req: Request, res: Response) => {
-	try {
-		const restaurantName = req.params.name;
-
-		const menu = await dbCollections.Menus?.findOne<Menu>({
-			restaurant: restaurantName
-		});
-
-		if (!menu) {
-			return res.status(404).send('Restaurant or menu not found');
-		}
-
-		res.status(200).send(menu);
-	} catch (error) {
-		console.error(error);
-		res.status(500).send('que pedo');
-	}
-});
-
-menusRouter.get('/:restaurant/:dish', async (req: Request, res: Response) => {
+menusRouter.get('/:restaurant/:menu', async (req: Request, res: Response) => {
 	try {
 		const restaurant = req.params.restaurant;
-		const dishName = req.params.dish.toLowerCase();
-		const menu = await dbCollections.Menus?.findOne<Menu>({
-			restaurant: restaurant,
-			'dishes.name': { $regex: new RegExp(`${dishName}`, 'i') }
+		const menu = req.params.menu.toLowerCase();
+		const findMenu = await dbCollections.Restaurants?.findOne<Restaurant>({
+			name: restaurant,
+			'menu.name': { $regex: new RegExp(`${menu}`, 'i') }
 		});
-		if (!menu) {
+		if (!findMenu) {
 			return res.status(404).send('Restaurant not found');
 		}
-		const dishes = menu.dishes.filter((dish) =>
-			dish.name.toLowerCase().includes(dishName)
+		const dishes = findMenu.menu.filter((dish) =>
+			dish.name.toLowerCase().includes(menu)
 		);
 		if (!dishes) {
 			return res.status(404).send('dishes not found');
 		}
 		const result = {
-			id: menu._id,
-			restaurant: menu.restaurant,
-			dishes: dishes
+			id: findMenu._id,
+			restaurant: findMenu.name,
+			menu: dishes
 		};
 		res.status(200).send(result);
 	} catch (error) {
@@ -94,53 +73,92 @@ menusRouter.get('/:restaurant/:dish', async (req: Request, res: Response) => {
 	}
 });
 
-menusRouter.post('/', async (req: Request, res: Response) => {
+
+menusRouter.post('/:restaurantId', async (req: Request, res: Response) => {
 	try {
-		const newMenu = req.body;
-		const result = await dbCollections.Menus?.insertOne(newMenu);
-		if (!result) {
-			res.status(500).send(result);
+		const { restaurantId } = req.params;
+		const newItem = req.body;
+		newItem._id = new ObjectId();
+		const findRestaurant = await dbCollections.Restaurants?.findOne<Restaurant>({ _id: new ObjectId(restaurantId) });
+		if (!findRestaurant) {
+			return res.status(404).send('Element not found');
 		}
-		res.status(201).send(newMenu);
+
+		const updatedRestaurant = await dbCollections.Restaurants?.updateOne(
+			{ _id: new ObjectId(restaurantId) },
+			{ $push: { menu: newItem } }
+		);
+
+		res.status(201).send(updatedRestaurant);
+
+
 	} catch (error) {
-		console.error(error);
-		res.status(500).send('Error insert menu');
+		console.error('Error adding item to menu:', error);
+		res.status(500).send('Error adding item to menu');
 	}
 });
 
-menusRouter.put('/:id', async (req: Request, res: Response) => {
-	const id = req?.params?.id;
+menusRouter.put('/:restaurantId/:menuId', async (req: Request, res: Response) => {
 	try {
+		const { restaurantId, menuId } = req.params;
 		const updatedMenu = req.body;
-		const query = { _id: new ObjectId(id) };
-		const result = await dbCollections.Menus?.updateOne(query, {
-			$set: updatedMenu
-		});
-		if (!result) {
-			res.status(500).send(result);
+
+		const findDish = await dbCollections.Restaurants?.findOne(
+			{ _id: new ObjectId(restaurantId), 'menu._id': new ObjectId(menuId) },
+			{ projection: { 'menu.$': 1 } }
+		)
+
+		if (!findDish || !findDish.menu || findDish.menu.length === 0) {
+			return res.status(404).send('Element not found');
 		}
-		const updateData = await dbCollections.Menus?.findOne(query);
+
+		const currentMenu = findDish.menu[0];
+		const updatedMenuItem = { ...currentMenu, ...updatedMenu };
+
+		const updateData = await dbCollections.Restaurants?.updateOne(
+			{
+				_id: new ObjectId(restaurantId),
+				'menu._id': new ObjectId(menuId)
+			},
+			{ $set: { 'menu.$': updatedMenuItem } }
+		);
 		if (!updateData) {
-			res.status(404).send(result);
+			return res.status(404).send('Element not found');
 		}
-		res.status(200).send(updateData);
+		if (updateData?.modifiedCount === 1) {
+			res.status(200).send('Menu item updated successfully');
+		} else {
+			res.status(500).send('Failed to update restaurant');
+		}
 	} catch (error) {
 		console.error(error);
 		res.status(500).send(error);
 	}
 });
 
-menusRouter.delete('/:id', async (req: Request, res: Response) => {
-	const id = req?.params?.id;
+
+
+menusRouter.delete('/:restaurantId/:menuId', async (req: Request, res: Response) => {
 	try {
-		const query = { _id: new ObjectId(id) };
-		const result = await dbCollections.Menus?.deleteOne(query);
-		if (!result) {
-			res.status(500).send(result);
+		const { restaurantId, menuId } = req.params;
+
+		const updatedRestaurant = await dbCollections.Restaurants?.updateOne(
+			{
+				_id: new ObjectId(restaurantId),
+				'menu._id': new ObjectId(menuId)
+			},
+			{ $pull: { menu: { _id: new ObjectId(menuId) } } } as Partial<Restaurant>
+		);
+		if (!updatedRestaurant) {
+			return res.status(404).send('Element not found');
 		}
-		res.status(200).send(result);
+		if (updatedRestaurant?.modifiedCount === 1) {
+			res.status(200).send('Menu item removed successfully');
+		} else {
+			res.status(500).send('Failed to deleted restaurant');
+		}
 	} catch (error) {
-		console.error(error);
-		res.status(500).send(error);
+		console.error('Error removing item from menu:', error);
+		res.status(500).send('Error removing item from menu');
 	}
 });
