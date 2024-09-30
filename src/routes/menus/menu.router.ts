@@ -11,7 +11,12 @@ menusRouter.get('/', async (req: Request, res: Response) => {
 		if (!menus) {
 			res.status(404).send('Dish not found');
 		}
-		res.status(200).send(menus?.map(dishes => dishes.menu));
+
+		const combinedMenus = menus?.flatMap(restaurant => [
+			...restaurant.menu,
+		]);
+
+		res.status(200).send(combinedMenus);
 	} catch (error) {
 		console.error(error);
 		res.status(500).send('Error Dishes');
