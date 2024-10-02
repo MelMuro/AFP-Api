@@ -38,8 +38,8 @@ menusRouter.get('/:restaurant', async (req: Request, res: Response) => {
 			res.status(404).send('Dish not found');
 		}
 		const result = {
-			id: menuItem?._id,
-			restaurant: menuItem?.name,
+			_id: menuItem?._id,
+			name: menuItem?.name,
 			menu: menuItem?.menu
 		};
 		res.status(200).send(result);
@@ -67,8 +67,8 @@ menusRouter.get('/:restaurant/:menu', async (req: Request, res: Response) => {
 			return res.status(404).send('dishes not found');
 		}
 		const result = {
-			id: findMenu._id,
-			restaurant: findMenu.name,
+			_id: findMenu._id,
+			name: findMenu.name,
 			menu: dishes
 		};
 		res.status(200).send(result);

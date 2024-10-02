@@ -25,34 +25,34 @@ describe('Menus Router tests', () => {
 
 	it('should GET all menus', async () => {
 		//Act
-		const res = await request.get('/menu/');
-		const menuItems = res.body as Restaurant;
+		const res = await request.get('/menu');
+		const menuItems = res.body as MenuItem[];
 
 		//Assert
 		expect(res.statusCode).toBe(200);
-		expect(menuItems.menu[0].name).toBe('chilaquiles');
+		expect(menuItems[0].name).toBe('chilaquiles');
 	});
 
-	it.only('should GET a menu by restaurant', async () => {
+	it('should GET a menu by restaurant', async () => {
 		//Act
 		const res = await request.get('/menu/Test Restaurant 1');
 		const menuItem = res.body as Restaurant;
 
 		//Assert
 		expect(res.statusCode).toBe(200);
-		expect(menuItem.menu[0].name).toBe('chilaquiles');
+		expect(menuItem.menu[1].name).toBe('carlota');
 	});
 
-	// it('should GET a dish from by restaurant', async () => {
-	// 	//Act
-	// 	const res = await request.get('/menus/Test Restaurant 1/chilaquiles');
-	// 	const menus = res.body as Menu;
+	it('should GET a dish from by restaurant', async () => {
+		//Act
+		const res = await request.get('/menu/Test Restaurant 1/chilaquiles');
+		const menuItem = res.body as Restaurant;
 
-	// 	//Assert
-	// 	expect(res.statusCode).toBe(200);
-	// 	expect(menus.restaurant).toBe('Test Restaurant 1');
-	// 	expect(menus.dishes[0].name).toBe('chilaquiles');
-	// });
+		//Assert
+		expect(res.statusCode).toBe(200);
+		expect(menuItem.name).toBe('Test Restaurant 1');
+		expect(menuItem.menu[0].name).toBe('chilaquiles');
+	});
 
 	// it('should POST a menu', async () => {
 	// 	//Act
