@@ -27,6 +27,7 @@ export const seedDatabase = () => {
 		.collection(process.env.DB_RESTAURANTS_COLLECTION);
 
 	dbCollections.Restaurants.insertOne({
+		_id: new ObjectId('67003143978b1d8448f64448'),
 		name: 'Test Restaurant 1',
 		description: 'Some test description',
 		category: 'Test Category',

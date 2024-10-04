@@ -51,12 +51,22 @@ menusRouter.get('/:restaurant', async (req: Request, res: Response) => {
 
 menusRouter.get('/:restaurant/:menu', async (req: Request, res: Response) => {
 	try {
-		const restaurant = req.params.restaurant;
+		const { restaurant } = req.params;
 		const menu = req.params.menu.toLowerCase();
-		const findMenu = await dbCollections.Restaurants?.findOne<Restaurant>({
-			name: restaurant,
-			'menu.name': { $regex: new RegExp(`${menu}`, 'i') }
-		});
+		let query;
+		if (ObjectId.isValid(restaurant)) {
+			query = {
+				_id: new ObjectId(restaurant),
+				'menu.name': { $regex: new RegExp(`${menu}`, 'i') }
+			};
+		} else {
+			query = {
+				name: restaurant,
+				'menu.name': { $regex: new RegExp(`${menu}`, 'i') }
+			};
+		}
+
+		const findMenu = await dbCollections.Restaurants?.findOne<Restaurant>(query);
 		if (!findMenu) {
 			return res.status(404).send('Restaurant not found');
 		}

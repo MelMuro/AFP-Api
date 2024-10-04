@@ -2,6 +2,7 @@ import { Restaurant, MenuItem } from './../restaurants/restaurant.model';
 import supertest from 'supertest';
 import app from '../../app';
 import * as db from '../../db/client.mock';
+import { ObjectId } from 'mongodb';
 
 
 const request = supertest(app);
@@ -37,6 +38,7 @@ describe('Menus Router tests', () => {
 		//Act
 		const res = await request.get('/menu/Test Restaurant 1');
 		const menuItem = res.body as Restaurant;
+		console.log('menuItem ', menuItem);
 
 		//Assert
 		expect(res.statusCode).toBe(200);
@@ -54,34 +56,30 @@ describe('Menus Router tests', () => {
 		expect(menuItem.menu[0].name).toBe('chilaquiles');
 	});
 
-	// it('should POST a menu', async () => {
-	// 	//Act
-	// 	const mockMenu = {
-	// 		restaurant: 'Sushito',
-	// 		dishes: [
-	// 			{
-	// 				category: 'Entrada,',
-	// 				name: 'Taco yaqui',
-	// 				description: 'totopos de maiz con salsa y queso',
-	// 				price: 120,
-	// 				picture: 'test_picture50',
-	// 				isAvailable: true,
-	// 				tag: 'empanizado'
-	// 			}
-	// 		]
-	// 	};
-	// 	const res = await request.post('/menus').send(mockMenu);
+	it('should create a menu', async () => {
+		//Act
+		const mockMenu = {
+			_id: new ObjectId('97003143978b1d8448f64440'),
+			category: 'Entrada,',
+			name: 'Taco yaqui',
+			description: 'totopos de maiz con salsa y queso',
+			price: 120,
+			picture: 'test_picture50',
+			isAvailable: true,
+			tag: 'empanizado'
 
-	// 	const getNewRestaurant = await request.get(
-	// 		`/menus/${mockMenu.restaurant}/${mockMenu.dishes[0].name}`
-	// 	);
-	// 	const menus = getNewRestaurant.body as Menu;
+		};
+		const res = await request.post('/menu/67003143978b1d8448f64448').send(mockMenu);
+		expect(res.statusCode).toBe(201);
+		const getNewMenu = await request.get(
+			`/menu/67003143978b1d8448f64448/${mockMenu.name}`
+		);
+		const dishPosted = getNewMenu.body as Restaurant;
 
-	// 	//Assert
-	// 	expect(res.statusCode).toBe(201);
-	// 	expect(menus.restaurant).toBe(mockMenu.restaurant);
-	// 	expect(menus.dishes[0].name).toBe(mockMenu.dishes[0].name);
-	// });
+		//Assert
+		expect(res.statusCode).toBe(201);
+		expect(dishPosted.menu[0].name).toBe(mockMenu.name);
+	});
 
 	// it('should UPDATE a menu', async () => {
 	// 	const resBefore = await request.get('/menus');
