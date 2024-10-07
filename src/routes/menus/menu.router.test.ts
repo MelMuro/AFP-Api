@@ -30,7 +30,7 @@ describe('Menus Router tests', () => {
 		const menuItems = res.body as MenuItem[];
 
 		//Assert
-		expect(res.statusCode).toBe(200);
+		expect(res.status).toBe(200);
 		expect(menuItems[0].name).toBe('chilaquiles');
 	});
 
@@ -108,35 +108,18 @@ describe('Menus Router tests', () => {
 		expect(menuAfter.menu[0].name).toBe('Sushitito editado');
 	});
 
-	// it('should DELETE a menu', async () => {
-	// 	const resBefore = await request.get('/menus');
-	// 	const menusBefore = resBefore.body as Menu[];
+	it('should DELETE a menu item', async () => {
+		const resBefore = await request.get('/menu/67003143978b1d8448f64448');
+		const menusBefore = resBefore.body as Restaurant;
+		console.log('menusBefore ', menusBefore);
 
-	// 	const res = await request.delete(`/menus/${menusBefore[0]._id}`);
+		const res = await request.delete(`/menu/67003143978b1d8448f64448/${menusBefore.menu[0]._id}`);
 
-	// 	const resAfter = await request.get('/menus');
-	// 	const menusAfter = resAfter.body as Menu[];
+		const resAfter = await request.get('/menu/67003143978b1d8448f64448');
+		const menusAfter = resAfter.body as Restaurant;
 
-	// 	expect(res.status).toBe(200);
-	// 	expect(menusBefore).toHaveLength(1);
-	// 	expect(menusAfter).toHaveLength(0);
-	// });
-
-	// it.only('should GET menu from any restaurant', async () => {
-	// 	try {
-	// 		//Act
-	// 		const res = await request.get('/menus/restaurant/Restaurant%201');
-
-	// 		// Log de la respuesta completa para depuración
-	// 		console.log('Response Status Code:', res.statusCode);
-	// 		console.log('Response Body:', res.body);
-	// 		console.log('Response Headers:', res.headers);
-
-	// 		//Assert
-	// 		//expect(res.statusCode).toBe(200);
-	// 	} catch (error) {
-	// 		console.error('Error during test:', error);
-	// 		throw error; // Para asegurarte de que el test falle y no pase inadvertido
-	// 	}
-	// });
+		expect(res.status).toBe(200);
+		expect(menusBefore.menu).toHaveLength(2);
+		expect(menusAfter.menu).toHaveLength(1);
+	});
 });

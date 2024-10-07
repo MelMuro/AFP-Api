@@ -164,8 +164,6 @@ menusRouter.put('/:restaurantId/:menuId', async (req: Request, res: Response) =>
 	}
 });
 
-
-
 menusRouter.delete('/:restaurantId/:menuId', async (req: Request, res: Response) => {
 	try {
 		const { restaurantId, menuId } = req.params;
