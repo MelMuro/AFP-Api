@@ -54,10 +54,20 @@ menusRouter.get('/:restaurant/:menu', async (req: Request, res: Response) => {
 		const { restaurant } = req.params;
 		const menu = req.params.menu.toLowerCase();
 		let query;
-		if (ObjectId.isValid(restaurant)) {
+		if (ObjectId.isValid(restaurant) && ObjectId.isValid(menu)) {
+			query = {
+				_id: new ObjectId(restaurant),
+				'menu._id': new ObjectId(menu)
+			};
+		} else if (ObjectId.isValid(restaurant)) {
 			query = {
 				_id: new ObjectId(restaurant),
 				'menu.name': { $regex: new RegExp(`${menu}`, 'i') }
+			};
+		} else if (ObjectId.isValid(menu)) {
+			query = {
+				name: restaurant,
+				'menu._id': new ObjectId(menu)
 			};
 		} else {
 			query = {
@@ -70,7 +80,10 @@ menusRouter.get('/:restaurant/:menu', async (req: Request, res: Response) => {
 		if (!findMenu) {
 			return res.status(404).send('Restaurant not found');
 		}
-		const dishes = findMenu.menu.filter((dish) =>
+
+		const dishes = ObjectId.isValid(menu) ? findMenu.menu.filter((dish) =>
+			dish._id.equals(menu)
+		) : findMenu.menu.filter((dish) =>
 			dish.name.toLowerCase().includes(menu)
 		);
 		if (!dishes) {

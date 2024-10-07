@@ -47,7 +47,7 @@ describe('Menus Router tests', () => {
 
 	it('should GET a dish from by restaurant', async () => {
 		//Act
-		const res = await request.get('/menu/Test Restaurant 1/chilaquiles');
+		const res = await request.get('/menu/Test Restaurant 1/507f191e810c19729de860ea');
 		const menuItem = res.body as Restaurant;
 
 		//Assert
@@ -59,7 +59,6 @@ describe('Menus Router tests', () => {
 	it('should create a menu', async () => {
 		//Act
 		const mockMenu = {
-			_id: new ObjectId('97003143978b1d8448f64440'),
 			category: 'Entrada,',
 			name: 'Taco yaqui',
 			description: 'totopos de maiz con salsa y queso',
@@ -75,42 +74,39 @@ describe('Menus Router tests', () => {
 			`/menu/67003143978b1d8448f64448/${mockMenu.name}`
 		);
 		const dishPosted = getNewMenu.body as Restaurant;
+		console.log('dishPosted vgvghvbghvg ', dishPosted);
 
 		//Assert
 		expect(res.statusCode).toBe(201);
 		expect(dishPosted.menu[0].name).toBe(mockMenu.name);
 	});
 
-	// it('should UPDATE a menu', async () => {
-	// 	const resBefore = await request.get('/menus');
-	// 	const menusBefore = resBefore.body as Menu[];
+	it('should UPDATE a menu item', async () => {
+		const resBefore = await request.get('/menu/67003143978b1d8448f64448/507f191e810c19729de860ea');
+		const menuBefore = resBefore.body as Restaurant;
 
-	// 	expect(menusBefore[0].restaurant).toBe('Test Restaurant 1');
-	// 	const updatedMenu = {
-	// 		restaurant: 'Test Restaurant 1 Edit',
-	// 		dishes: [
-	// 			{
-	// 				category: 'Plato fuerte,',
-	// 				name: 'Sushitito',
-	// 				description: 'Un sushi',
-	// 				price: 222,
-	// 				picture: 'test_picture50',
-	// 				isAvailable: true,
-	// 				tag: 'empanizado'
-	// 			}
-	// 		]
-	// 	};
+		expect(menuBefore.name).toBe('Test Restaurant 1');
+		expect(menuBefore.menu[0].name).toBe('chilaquiles');
+		const updatedMenu = {
+			category: 'Plato fuerte,',
+			name: 'Sushitito editado',
+			description: 'Un sushi',
+			price: 222,
+			picture: 'test_picture50',
+			isAvailable: true,
+			tag: 'empanizado'
+		};
 
-	// 	const res = await request
-	// 		.put(`/menus/${menusBefore[0]._id}`)
-	// 		.send(updatedMenu);
+		const res = await request
+			.put(`/menu/67003143978b1d8448f64448/${menuBefore.menu[0]._id}`)
+			.send(updatedMenu);
 
-	// 	const resAfter = await request.get('/menus');
-	// 	const menuAfter = resAfter.body as Menu[];
+		const resAfter = await request.get('/menu/67003143978b1d8448f64448/507f191e810c19729de860ea');
+		const menuAfter = resAfter.body as Restaurant;
 
-	// 	expect(res.status).toBe(200);
-	// 	expect(menuAfter[0].restaurant).toBe('Test Restaurant 1 Edit');
-	// });
+		expect(res.status).toBe(200);
+		expect(menuAfter.menu[0].name).toBe('Sushitito editado');
+	});
 
 	// it('should DELETE a menu', async () => {
 	// 	const resBefore = await request.get('/menus');

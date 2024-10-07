@@ -42,7 +42,7 @@ export const seedDatabase = () => {
 					'https://patijinich.com/es/wp-content/uploads/sites/3/2017/07/207-chilaquiles-verdes.jpg',
 				isAvailable: true,
 				tag: 'enchiloso',
-				_id: new ObjectId("507f191e810c19729de860ea").toString()
+				_id: new ObjectId("507f191e810c19729de860ea")
 
 			},
 			{
@@ -54,7 +54,7 @@ export const seedDatabase = () => {
 					'https://www.gastrolabweb.com/postres/2023/2/14/carlota-de-limon-un-bocado-de-alegria-al-corazon-que-preparas-con-esta-receta-33298.html#&gid=1&pid=1',
 				isAvailable: true,
 				tag: '',
-				_id: new ObjectId()
+				_id: new ObjectId('517f191e810c19729de860ea')
 			}
 		],
 		schedule: [
