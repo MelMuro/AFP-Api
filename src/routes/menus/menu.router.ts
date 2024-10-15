@@ -11,7 +11,12 @@ menusRouter.get('/', async (req: Request, res: Response) => {
 		if (!menus) {
 			res.status(404).send('Dish not found');
 		}
-		res.status(200).send(menus?.map(dishes => dishes.menu));
+
+		const combinedMenus = menus?.flatMap(restaurant => [
+			...restaurant.menu,
+		]);
+
+		res.status(200).send(combinedMenus);
 	} catch (error) {
 		console.error(error);
 		res.status(500).send('Error Dishes');
@@ -33,8 +38,8 @@ menusRouter.get('/:restaurant', async (req: Request, res: Response) => {
 			res.status(404).send('Dish not found');
 		}
 		const result = {
-			id: menuItem?._id,
-			restaurant: menuItem?.name,
+			_id: menuItem?._id,
+			name: menuItem?.name,
 			menu: menuItem?.menu
 		};
 		res.status(200).send(result);
@@ -46,24 +51,47 @@ menusRouter.get('/:restaurant', async (req: Request, res: Response) => {
 
 menusRouter.get('/:restaurant/:menu', async (req: Request, res: Response) => {
 	try {
-		const restaurant = req.params.restaurant;
+		const { restaurant } = req.params;
 		const menu = req.params.menu.toLowerCase();
-		const findMenu = await dbCollections.Restaurants?.findOne<Restaurant>({
-			name: restaurant,
-			'menu.name': { $regex: new RegExp(`${menu}`, 'i') }
-		});
+		let query;
+		if (ObjectId.isValid(restaurant) && ObjectId.isValid(menu)) {
+			query = {
+				_id: new ObjectId(restaurant),
+				'menu._id': new ObjectId(menu)
+			};
+		} else if (ObjectId.isValid(restaurant)) {
+			query = {
+				_id: new ObjectId(restaurant),
+				'menu.name': { $regex: new RegExp(`${menu}`, 'i') }
+			};
+		} else if (ObjectId.isValid(menu)) {
+			query = {
+				name: restaurant,
+				'menu._id': new ObjectId(menu)
+			};
+		} else {
+			query = {
+				name: restaurant,
+				'menu.name': { $regex: new RegExp(`${menu}`, 'i') }
+			};
+		}
+
+		const findMenu = await dbCollections.Restaurants?.findOne<Restaurant>(query);
 		if (!findMenu) {
 			return res.status(404).send('Restaurant not found');
 		}
-		const dishes = findMenu.menu.filter((dish) =>
+
+		const dishes = ObjectId.isValid(menu) ? findMenu.menu.filter((dish) =>
+			dish._id.equals(menu)
+		) : findMenu.menu.filter((dish) =>
 			dish.name.toLowerCase().includes(menu)
 		);
 		if (!dishes) {
 			return res.status(404).send('dishes not found');
 		}
 		const result = {
-			id: findMenu._id,
-			restaurant: findMenu.name,
+			_id: findMenu._id,
+			name: findMenu.name,
 			menu: dishes
 		};
 		res.status(200).send(result);
@@ -135,8 +163,6 @@ menusRouter.put('/:restaurantId/:menuId', async (req: Request, res: Response) =>
 		res.status(500).send(error);
 	}
 });
-
-
 
 menusRouter.delete('/:restaurantId/:menuId', async (req: Request, res: Response) => {
 	try {
